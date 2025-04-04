@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel Administrador</title>
+  <link rel="stylesheet" href="../styles/principal.css">
+</head>
+<body>
+  <h1>Panel del Administrador 🍔</h1>
+
+  <section class="formulario-admin">
+    <h2>Añadir nueva hamburguesa</h2>
+    <form id="form-hamburguesa">
+      <input type="text" id="nombre" placeholder="Nombre" required>
+      <input type="text" id="descripcion" placeholder="Descripción" required>
+      <input type="number" step="0.01" id="precio" placeholder="Precio (€)" required>
+      <button type="submit">Crear Hamburguesa</button>
+    </form>
+    <p id="mensaje"></p>
+  </section>
+
+  <section class="tabla-hamburguesas">
+    <h2>Hamburguesas Registradas</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Precio (€)</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="lista-hamburguesas"></tbody>
+    </table>
+  </section>
+
+  <script src="../scripts/admin.js"></script>
+</body>
+</html>
