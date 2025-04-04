@@ -6,10 +6,21 @@
   <link rel="stylesheet" href="../styles/principal.css">
 </head>
 <body>
-  <header>
+  <header style="padding: 10px 20px;">
     <h1>🍔 Menú de Hamburguesas</h1>
     <button id="logout">Cerrar sesión</button>
   </header>
+
+  <!-- Botón del carrito y contador (badge) -->
+  <button id="carrito-btn">🛒</button>
+  <span id="contador-carrito" class="badge">0</span>
+
+  <!-- Desplegable del carrito -->
+  <div id="carrito-desplegable">
+    <h4>🛒 Mi carrito</h4>
+    <ul id="lista-carrito"></ul>
+    <button onclick="window.location.href='carrito.html'" class="ir-carrito-btn">Ir a mi carrito 🛒</button>
+  </div>
 
   <main>
     <section id="contenedor-hamburguesas" class="grid-hamburguesas">
@@ -18,6 +29,6 @@
   </main>
 
   <script src="../scripts/menu.js"></script>
-  <script src="../scripts/usuarios.js"></script> <!-- para logout -->
+  <script src="../scripts/usuarios.js"></script>
 </body>
 </html>

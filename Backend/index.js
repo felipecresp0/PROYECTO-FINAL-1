@@ -16,3 +16,5 @@ app.listen(PORT, () => console.log(`Servidor funcionando en puerto ${PORT}`));
 const rutasHamburguesas = require('./routes/hamburguesas');
 app.use('/api/hamburguesas', rutasHamburguesas);
 
+const rutasCarrito = require('./routes/carrito');
+app.use('/api/carrito', rutasCarrito);
