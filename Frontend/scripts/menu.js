@@ -69,7 +69,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Desplegar carrito y cargar resumen
   btnCarrito.addEventListener('click', () => {
-    desplegable.style.display = (desplegable.style.display === 'none') ? 'block' : 'none';
+    if (desplegable.classList.contains('mostrar')) {
+      desplegable.classList.remove('mostrar');
+      setTimeout(() => desplegable.style.display = 'none', 150); // espera un poco para que no desaparezca bruscamente
+    } else {
+      desplegable.style.display = 'block';
+      setTimeout(() => desplegable.classList.add('mostrar'), 10); // pequeño retardo para que se aplique la animación
+    }
+    
     cargarResumenCarrito();
   });
 

@@ -18,3 +18,6 @@ app.use('/api/hamburguesas', rutasHamburguesas);
 
 const rutasCarrito = require('./routes/carrito');
 app.use('/api/carrito', rutasCarrito);
+
+const rutasReservas = require('./routes/reservas');
+app.use('/api/reservas', rutasReservas);

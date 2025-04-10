@@ -84,5 +84,61 @@ async function eliminarHamburguesa(id) {
     console.error('Error al eliminar:', err);
   }
 }
+async function cargarReservas() {
+  const token = localStorage.getItem('token');
+
+  try {
+    const res = await fetch('http://localhost:3000/api/reservas/admin', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    const reservas = await res.json();
+    const tbody = document.getElementById('tabla-reservas-body');
+    tbody.innerHTML = '';
+
+    reservas.forEach(r => {
+      const fila = document.createElement('tr');
+      fila.innerHTML = `
+      <td>${r.id}</td>
+      <td>${r.usuario}</td>
+      <td>${r.fecha}</td>
+      <td>${r.hora}</td>
+      <td>${r.personas}</td>
+      <td><button onclick="eliminarReserva(${r.id})">❌ Eliminar</button></td>
+    `;
+    
+      tbody.appendChild(fila);
+    });
+
+  } catch (error) {
+    console.error('❌ Error al cargar reservas:', error);
+  }
+}
+async function eliminarReserva(id) {
+  if (!confirm('¿Estás seguro de eliminar esta reserva?')) return;
+
+  try {
+    const res = await fetch(`http://localhost:3000/api/reservas/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    const datos = await res.json();
+
+    if (res.ok) {
+      alert(datos.mensaje);
+      cargarReservas();
+    } else {
+      alert('Error: ' + datos.mensaje);
+    }
+  } catch (error) {
+    console.error('❌ Error al eliminar reserva:', error);
+  }
+}
+
 
 window.addEventListener('DOMContentLoaded', cargarHamburguesas);

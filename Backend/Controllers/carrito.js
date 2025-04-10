@@ -56,5 +56,23 @@ const eliminarDelCarrito = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+const actualizarCantidad = async (req, res) => {
+  const { id, cantidad } = req.body;
+  const usuario_id = req.usuario.id;
 
-module.exports = { agregarAlCarrito, obtenerCarrito, eliminarDelCarrito };
+  try {
+    await db.query(`
+      UPDATE carrito
+      SET cantidad = $1
+      WHERE id = $2 AND usuario_id = $3
+    `, [cantidad, id, usuario_id]);
+
+    res.json({ mensaje: 'Cantidad actualizada' });
+  } catch (error) {
+    console.error('Error al actualizar cantidad:', error);
+    res.status(500).json({ error: 'Error al actualizar cantidad' });
+  }
+};
+
+
+module.exports = { agregarAlCarrito, obtenerCarrito, eliminarDelCarrito, actualizarCantidad };
