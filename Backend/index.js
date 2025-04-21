@@ -7,11 +7,9 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // 👈 ¡ESTO ES CLAVE!
 
+// Rutas existentes
 const rutasUsuarios = require('./routes/usuarios');
 app.use('/api/usuarios', rutasUsuarios);
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Servidor funcionando en puerto ${PORT}`));
 
 const rutasHamburguesas = require('./routes/hamburguesas');
 app.use('/api/hamburguesas', rutasHamburguesas);
@@ -24,3 +22,13 @@ app.use('/api/reservas', rutasReservas);
 
 const rutasRestaurantes = require('./routes/restaurantes');
 app.use('/api/restaurantes', rutasRestaurantes);
+
+// Nuevas rutas
+const rutasDisponibilidad = require('./routes/disponibilidad');
+app.use('/api/disponibilidad', rutasDisponibilidad);
+
+const rutasResenas = require('./routes/resenas');
+app.use('/api/resenas', rutasResenas);
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Servidor funcionando en puerto ${PORT}`));

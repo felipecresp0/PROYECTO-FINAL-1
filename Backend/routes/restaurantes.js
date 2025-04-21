@@ -1,41 +1,36 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../Models/conexionBD');
+const { buscarPorCP, obtenerRestaurante, agregarFoto } = require('../Controllers/restaurantes');
+const verificarToken = require('../Middlewares/verificarToken');
+const esAdmin = require('../Middlewares/esAdmin');
 
 // 🟢 Buscar restaurantes por código postal
 router.get('/', async (req, res) => {
-    const { cp } = req.query;
+  const { cp } = req.query;
   
-    if (!cp) return res.status(400).json({ error: 'Falta el código postal' });
+  if (!cp) return res.status(400).json({ error: 'Falta el código postal' });
   
-    // Extraer los 2 primeros dígitos del CP
-    const prefijo = cp.substring(0, 2); // '50' por ejemplo
+  // Extraer los 2 primeros dígitos del CP
+  const prefijo = cp.substring(0, 2); // '50' por ejemplo
   
-    try {
-      const resultado = await db.query(
-        'SELECT * FROM restaurantes WHERE codigo_postal LIKE $1',
-        [`${prefijo}%`]
-      );
-  
-      res.json(resultado.rows);
-    } catch (error) {
-      console.error('❌ Error al buscar restaurantes:', error);
-      res.status(500).json({ error: 'Error interno del servidor' });
-    }
-  });
-  
-// 🔍 Obtener restaurante por ID
-router.get('/:id', async (req, res) => {
   try {
-    const { id } = req.params;
-    const resultado = await db.query('SELECT * FROM restaurantes WHERE id = $1', [id]);
-
-    if (resultado.rows.length === 0) return res.status(404).json({ error: 'No encontrado' });
-
-    res.json(resultado.rows[0]);
+    const resultado = await db.query(
+      'SELECT * FROM restaurantes WHERE codigo_postal LIKE $1',
+      [`${prefijo}%`]
+    );
+    
+    res.json(resultado.rows);
   } catch (error) {
-    res.status(500).json({ error: 'Error al obtener restaurante' });
+    console.error('❌ Error al buscar restaurantes:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
+  
+// 🔍 Obtener restaurante por ID (con fotos y valoración)
+router.get('/:id', obtenerRestaurante);
+
+// 📷 Añadir foto a un restaurante (solo admin)
+router.post('/:id/fotos', verificarToken, esAdmin, agregarFoto);
 
 module.exports = router;

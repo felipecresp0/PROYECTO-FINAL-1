@@ -1,85 +1,108 @@
-document.getElementById('form-reserva').addEventListener('submit', async (e) => {
-    e.preventDefault();
-  
-    const fecha = document.getElementById('fecha').value;
-    const hora = document.getElementById('hora').value;
-    const personas = document.getElementById('personas').value;
-    const token = localStorage.getItem('token');
-  
-    try {
-      const res = await fetch('http://localhost:3000/api/reservas/nueva', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ fecha, hora, personas })
-      });
-  
-      const datos = await res.json();
-      document.getElementById('mensaje-reserva').textContent = datos.mensaje || 'Reserva realizada con éxito';
-    } catch (error) {
-      console.error('Error al hacer reserva:', error);
-      document.getElementById('mensaje-reserva').textContent = 'Error al hacer la reserva';
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById('form-reserva');
-      const mensaje = document.getElementById('mensaje-reserva');
-      const nombreRestaurante = document.getElementById('nombre-restaurante');
-      const campoRestaurante = document.getElementById('restaurante_id');
-      const token = localStorage.getItem('token');
+// Reemplaza la función cargarDatosRestaurante con esta versión actualizada
+async function cargarDatosRestaurante(id) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/restaurantes/${id}`);
+    const data = await res.json();
     
-      const params = new URLSearchParams(window.location.search);
-      const restauranteId = params.get('restaurante');
-    
-      if (restauranteId) {
-        // Mostrar el nombre del restaurante
-        fetch(`http://localhost:3000/api/restaurantes/${restauranteId}`)
-          .then(res => res.json())
-          .then(data => {
-            nombreRestaurante.textContent = `Restaurante: ${data.nombre}`;
-            campoRestaurante.value = restauranteId;
-          })
-          .catch(err => {
-            nombreRestaurante.textContent = 'Restaurante no encontrado';
-            console.error(err);
-          });
-      }
-    
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-    
-        const reserva = {
-          fecha: document.getElementById('fecha').value,
-          hora: document.getElementById('hora').value,
-          personas: document.getElementById('personas').value,
-          restaurante_id: campoRestaurante.value
-        };
-    
-        try {
-          const res = await fetch('http://localhost:3000/api/reservas/nueva', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify(reserva)
-          });
-    
-          const data = await res.json();
-    
-          if (res.ok) {
-            mensaje.textContent = '✅ Reserva confirmada';
-          } else {
-            mensaje.textContent = `❌ Error: ${data.error || data.mensaje}`;
+    if (res.ok) {
+      // Mostrar información básica
+      nombreRestaurante.textContent = data.nombre || 'Restaurante Gula';
+      
+      // Si no tenemos dirección, mostrar solo el código postal
+      direccionRestaurante.textContent = `Código Postal: ${data.codigo_postal || 'No disponible'}`;
+      
+      // Mostrar valoración
+      if (data.valoracion) {
+        valoracionMedia.textContent = data.valoracion;
+        totalResenas.textContent = `(${data.total_resenas} reseñas)`;
+        
+        // Colorear estrellas según valoración
+        const valoracion = parseFloat(data.valoracion);
+        estrellasValoracion.forEach((estrella, i) => {
+          if (i < Math.floor(valoracion)) {
+            estrella.classList.add('active');
+          } else if (i < valoracion) {
+            // Media estrella (usando clases de Font Awesome)
+            estrella.classList.remove('fa-star');
+            estrella.classList.add('fa-star-half-alt');
+            estrella.classList.add('active');
           }
-        } catch (err) {
-          console.error(err);
-          mensaje.textContent = '❌ Error al conectar con el servidor';
-        }
-      });
-    });
-    
+        });
+      }
+      
+      // Mostrar fotos
+      // En la función cargarDatosRestaurante, modificamos la parte que carga las fotos
+if (data.fotos && data.fotos.length > 0) {
+  console.log("Fotos disponibles:", data.fotos); // Para depuración
+  fotosContainer.innerHTML = '';
+  data.fotos.forEach(url => {
+    console.log("Cargando imagen:", url); // Para depuración
+    const img = document.createElement('img');
+    img.src = url;
+    img.alt = `Foto de ${data.nombre}`;
+    img.className = 'foto-restaurante';
+    img.onerror = function() {
+      console.error("Error al cargar la imagen:", url);
+      this.src = "https://gula-hamburguesas.s3.us-east-1.amazonaws.com/20250421_0130_Restaurante+Gula+de+Noche_remix_01jsarfghxeka8mrs5f6pqhmhr.png";
+    };
+    fotosContainer.appendChild(img);
   });
-  
+} else {
+  console.log("No hay fotos disponibles, usando imagen por defecto"); // Para depuración
+  fotosContainer.innerHTML = `
+    <img src="https://gula-hamburguesas.s3.us-east-1.amazonaws.com/20250421_0130_Restaurante+Gula+de+Noche_remix_01jsarfghxeka8mrs5f6pqhmhr.png" 
+         alt="Imagen por defecto" 
+         class="foto-restaurante">
+  `;
+}
+    } else {
+      mensaje.textContent = '❌ No se pudo cargar la información del restaurante';
+    }
+  } catch (err) {
+    console.error('Error al cargar datos del restaurante:', err);
+    mensaje.textContent = '❌ Error al conectar con el servidor';
+  }
+}
+// En la función cargarDisponibilidad del archivo reserva.js
+async function cargarDisponibilidad(restauranteId, fecha) {
+  try {
+    console.log("Cargando disponibilidad para:", restauranteId, fecha); // Para depuración
+    
+    const res = await fetch(`http://localhost:3000/api/disponibilidad?restaurante_id=${restauranteId}&fecha=${fecha}`);
+    const slots = await res.json();
+    
+    console.log("Slots de disponibilidad recibidos:", slots); // Para depuración
+    
+    horasContainer.innerHTML = '';
+    
+    if (!Array.isArray(slots) || slots.length === 0) {
+      horasContainer.innerHTML = '<p>No hay horarios disponibles para esta fecha</p>';
+      return;
+    }
+    
+    slots.forEach(slot => {
+      const disponible = slot.mesas_disponibles > 0;
+      const horaFormateada = slot.hora.substring(0, 5); // Formato HH:MM
+      
+      const botonHora = document.createElement('div');
+      botonHora.className = `slot ${disponible ? '' : 'disabled'}`;
+      botonHora.textContent = horaFormateada;
+      
+      if (disponible) {
+        botonHora.addEventListener('click', () => {
+          // Deseleccionar todos los slots
+          document.querySelectorAll('.slot').forEach(s => s.classList.remove('selected'));
+          // Seleccionar este slot
+          botonHora.classList.add('selected');
+          // Guardar la hora en el campo oculto
+          campoHora.value = horaFormateada;
+        });
+      }
+      
+      horasContainer.appendChild(botonHora);
+    });
+  } catch (err) {
+    console.error('Error al cargar disponibilidad:', err);
+    horasContainer.innerHTML = '<p>Error al cargar los horarios disponibles</p>';
+  }
+}
