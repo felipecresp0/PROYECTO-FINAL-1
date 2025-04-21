@@ -8,7 +8,13 @@
 <body>
   <h1>📅 Reservar mesa</h1>
 
+  <!-- Aquí se muestra dinámicamente el nombre del restaurante -->
+  <h2 id="nombre-restaurante" style="text-align: center; margin-bottom: 1rem;"></h2>
+
   <form id="form-reserva" style="max-width: 400px; margin: auto;">
+    <!-- Campo oculto para el restaurante -->
+    <input type="hidden" id="restaurante_id" name="restaurante_id" />
+
     <label for="fecha">Fecha:</label>
     <input type="date" id="fecha" name="fecha" required><br><br>
 
@@ -25,4 +31,5 @@
 
   <script src="../scripts/reserva.js"></script>
 </body>
+
 </html>

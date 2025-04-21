@@ -21,3 +21,6 @@ app.use('/api/carrito', rutasCarrito);
 
 const rutasReservas = require('./routes/reservas');
 app.use('/api/reservas', rutasReservas);
+
+const rutasRestaurantes = require('./routes/restaurantes');
+app.use('/api/restaurantes', rutasRestaurantes);

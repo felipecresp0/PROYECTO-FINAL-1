@@ -14,4 +14,22 @@ router.get('/admin', verificarToken, esAdmin, obtenerTodasLasReservas);
 // 👉 Nueva ruta DELETE
 router.delete('/:id', verificarToken, eliminarReserva);
 
+router.get('/restaurante/:id', verificarToken, esAdmin, async (req, res) => {
+    const { id } = req.params;
+    try {
+      const resultado = await db.query(`
+        SELECT r.id, r.fecha, r.hora, r.personas, u.nombre AS cliente
+        FROM reservas r
+        JOIN usuarios u ON r.usuario_id = u.id
+        WHERE r.restaurante_id = $1
+        ORDER BY r.fecha, r.hora
+      `, [id]);
+  
+      res.json(resultado.rows);
+    } catch (error) {
+      console.error('Error al obtener reservas:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
 module.exports = router;

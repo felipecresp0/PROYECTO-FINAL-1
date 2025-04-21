@@ -29,11 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const card = document.createElement('div');
         card.className = 'card-hamburguesa';
         card.innerHTML = `
-          <h3>${h.nombre}</h3>
-          <p>${h.descripcion}</p>
-          <div class="precio">${h.precio} €</div>
-          <button onclick="añadirAlCarrito(${h.id})">Añadir al carrito</button>
-        `;
+  <img src="${h.imagen}" alt="${h.nombre}" class="menu-img" />
+  <h3>${h.nombre}</h3>
+  <p>${h.descripcion}</p>
+  <div class="precio">${Number(h.precio).toFixed(2)} €</div>
+  <button onclick="añadirAlCarrito(${h.id})">Añadir al carrito</button>
+`;
+
         contenedor.appendChild(card);
       });
     } catch (err) {

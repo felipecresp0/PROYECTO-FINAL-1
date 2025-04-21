@@ -139,6 +139,47 @@ async function eliminarReserva(id) {
     console.error('❌ Error al eliminar reserva:', error);
   }
 }
+document.addEventListener('DOMContentLoaded', () => {
+  const selector = document.getElementById('selector-restaurante');
+  const tabla = document.getElementById('tabla-reservas');
+  const token = localStorage.getItem('token');
+
+  fetch('http://localhost:3000/api/restaurantes')
+    .then(res => res.json())
+    .then(data => {
+      data.forEach(r => {
+        const opt = document.createElement('option');
+        opt.value = r.id;
+        opt.textContent = r.nombre;
+        selector.appendChild(opt);
+      });
+    });
+
+  selector.addEventListener('change', () => {
+    const id = selector.value;
+    if (!id) return;
+
+    fetch(`http://localhost:3000/api/reservas/restaurante/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      tabla.innerHTML = '';
+      data.forEach(r => {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+          <td>${r.cliente}</td>
+          <td>${r.fecha}</td>
+          <td>${r.hora}</td>
+          <td>${r.personas}</td>
+        `;
+        tabla.appendChild(fila);
+      });
+    });
+  });
+});
 
 
 window.addEventListener('DOMContentLoaded', cargarHamburguesas);

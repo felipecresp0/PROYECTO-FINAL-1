@@ -43,4 +43,19 @@ const obtenerHamburguesas = async (req, res) => {
   }
 };
 
-module.exports = { crear, listar, eliminar, obtenerHamburguesas };
+const obtenerDestacadas = async (req, res) => {
+  try {
+    const resultado = await db.query(
+      'SELECT * FROM hamburguesas WHERE destacada = true LIMIT 7'
+    );
+    res.status(200).json(resultado.rows);
+  } catch (error) {
+    console.error('Error al obtener hamburguesas destacadas:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+
+
+
+module.exports = { crear, listar, eliminar, obtenerHamburguesas, obtenerDestacadas };
