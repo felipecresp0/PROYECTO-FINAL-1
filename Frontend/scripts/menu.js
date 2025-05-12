@@ -128,3 +128,10 @@ document.addEventListener('DOMContentLoaded', () => {
   cargarMenu();
   actualizarContadorCarrito();
 });
+function irACategoria(pagina) {
+  window.location.href = pagina;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("📖 Página de categorías cargada");
+});

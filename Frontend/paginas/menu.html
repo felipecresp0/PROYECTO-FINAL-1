@@ -1,34 +1,72 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Menú de Hamburguesas</title>
-  <link rel="stylesheet" href="../styles/principal.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gula | Carta</title>
+  <link rel="stylesheet" href="../styles/principal.css" />
+  <link rel="stylesheet" href="../styles/menu.css" />
+  <script defer src="../scripts/menu.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
 </head>
 <body>
-  <header style="padding: 10px 20px;">
-    <h1>🍔 Menú de Hamburguesas</h1>
-    <button id="logout">Cerrar sesión</button>
+
+  <!-- ✅ HEADER NAVEGACIÓN -->
+  <header>
+    <div class="logo">
+      <a href="index.html">
+        <img src="https://gula-hamburguesas.s3.us-east-1.amazonaws.com/20250404_1704_GULA+Edgy+Burger+Logo_simple_compose_01jr0narqrebrva5ge7tefa84x.png" alt="Logo Gula" class="logo-img" />
+      </a>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="menu.html" class="active">Burgers</a>
+      <a href="foodtruck.html">FoodTruck</a>
+      <a href="nosotros.html">¿Quiénes somos?</a>
+      <a href="restaurantes.html">Restaurantes</a>
+    </nav>
+    <div class="header-right">
+      <i class="fas fa-search search-icon"></i>
+      <i class="fas fa-shopping-cart cart-icon" onclick="location.href='carrito.html'"></i>
+      <button class="sign-in-btn" onclick="location.href='acceso.html'">Sign in</button>
+    </div>
   </header>
 
-  <!-- Botón del carrito y contador (badge) -->
-  <button id="carrito-btn">🛒</button>
-  <span id="contador-carrito" class="badge">0</span>
+  <!-- ✅ CONTENIDO -->
+  <main class="contenido">
 
-  <!-- Desplegable del carrito -->
-  <div id="carrito-desplegable">
-    <h4>🛒 Mi carrito</h4>
-    <ul id="lista-carrito"></ul>
-    <button onclick="window.location.href='carrito.html'" class="ir-carrito-btn">Ir a mi carrito 🛒</button>
-  </div>
+    <h1 class="titulo-carta">📜 Nuestra Carta</h1>
 
-  <main>
-    <section id="contenedor-hamburguesas" class="grid-hamburguesas">
-      <!-- Aquí se mostrarán las cards -->
+    <section class="categorias-grid">
+      <div class="categoria-card" onclick="irACategoria('hamburguesas.html')">
+        <img src="../Imagenes/categoria-hamburguesa.webp" alt="Hamburguesas" />
+        <h3>Hamburguesas</h3>
+      </div>
+      <div class="categoria-card" onclick="irACategoria('postres.html')">
+        <img src="../Imagenes/categoria-postres.webp" alt="Postres" />
+        <h3>Postres</h3>
+      </div>
+      <div class="categoria-card" onclick="irACategoria('bebidas.html')">
+        <img src="../Imagenes/categoria-bebidas.webp" alt="Bebidas" />
+        <h3>Bebidas</h3>
+      </div>
+      <div class="categoria-card" onclick="irACategoria('acompañantes.html')">
+        <img src="../Imagenes/categoria-acompañantes.webp" alt="Acompañantes" />
+        <h3>Acompañantes</h3>
+      </div>
     </section>
+
   </main>
 
-  <script src="../scripts/menu.js"></script>
-  <script src="../scripts/usuarios.js"></script>
+  <!-- ✅ FOOTER -->
+  <footer class="footer-gula">
+    <div class="footer-content">
+      <p>🔥 Sabor que enciende tus pecados. Hecho con pasión por <strong>GULA</strong> 🍔</p>
+      <a href="https://www.instagram.com/tu_usuario" target="_blank" class="instagram-btn" title="Síguenos en Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+    </div>
+  </footer>
+
 </body>
 </html>

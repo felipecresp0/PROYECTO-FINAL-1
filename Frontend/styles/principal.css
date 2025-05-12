@@ -4,6 +4,8 @@ body {
     background-color: #f7f7f7;
     color: #333;
   }
+ 
+  
   
   h1, h2 {
     color: #111;
@@ -589,4 +591,132 @@ thead {
 
 .logo-img:hover {
   transform: scale(1.05);
+}
+.main-subheading {
+  font-size: 1.2rem;
+  color: #f7f7f7;
+  text-shadow: 0 0 2px #000;
+  margin-top: 1rem;
+}
+/* 🔥 BLOQUE 1 - Imagen + Texto sin fondo */
+.foodtruck-showcase {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  margin: 6rem auto 3rem;
+  max-width: 1300px;
+  padding: 2rem;
+  /* Fondo eliminado: */
+  /* background-color: rgba(0, 0, 0, 0.35); */
+  /* backdrop-filter: blur(8px); */
+  /* box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); */
+  /* border-radius: 20px; */
+}
+
+.showcase-img img {
+  width: 500px;
+  max-width: 100%;
+  border-radius: 16px;
+}
+
+.showcase-text {
+  max-width: 600px;
+  color: white;
+}
+
+.showcase-heading {
+  font-size: 2.5rem;
+  color: #ff4f4f;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.showcase-subheading {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #ffc107;
+}
+
+.showcase-text p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+/* 👹 BLOQUE 2 - Texto + Ilustración */
+.foodtruck-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 3rem auto;
+  padding: 0 2rem;
+  flex-wrap: wrap;
+}
+
+.foodtruck-text {
+  flex: 1;
+  color: white;
+  max-width: 550px;
+}
+
+.foodtruck-text p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.foodtruck-img-bottom img {
+  width: 300px;
+  max-width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .foodtruck-showcase,
+  .foodtruck-info {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+.footer-gula {
+  background-color: rgba(0, 0, 0, 0.85);
+  padding: 2rem;
+  text-align: center;
+  color: #fff;
+  font-size: 0.95rem;
+  border-top: 2px solid #ff6b35;
+  margin-top: 5rem;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-content p {
+  margin: 0;
+  font-weight: 400;
+}
+
+.instagram-btn {
+  font-size: 1.6rem;
+  color: #fff;
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  padding: 10px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.instagram-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px #ff6b35;
 }
