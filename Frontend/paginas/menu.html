@@ -20,9 +20,8 @@
     </div>
     <nav class="nav-links">
       <a href="index.html">Home</a>
-      <a href="menu.html" class="active">Burgers</a>
+      <a href="menu.html" class="active">Carta</a>
       <a href="foodtruck.html">FoodTruck</a>
-      <a href="nosotros.html">¿Quiénes somos?</a>
       <a href="restaurantes.html">Restaurantes</a>
     </nav>
     <div class="header-right">
@@ -32,14 +31,13 @@
     </div>
   </header>
 
-  <!-- ✅ CONTENIDO -->
-  <main class="contenido">
+  <!-- ✅ CONTENIDO PRINCIPAL -->
+  <main class="contenido fondo-carta">
 
-    <h1 class="titulo-carta">📜 Nuestra Carta</h1>
-
+    <!-- ✅ CATEGORÍAS -->
     <section class="categorias-grid">
       <div class="categoria-card" onclick="irACategoria('hamburguesas.html')">
-        <img src="../Imagenes/categoria-hamburguesa.webp" alt="Hamburguesas" />
+        <img src="../Imagenes/20250420_2054_Hamburguesa con Neón_remix_01jsa8pww0fn4rpmnpwp8w3tqe.png" alt="Hamburguesas" />
         <h3>Hamburguesas</h3>
       </div>
       <div class="categoria-card" onclick="irACategoria('postres.html')">
@@ -58,13 +56,58 @@
 
   </main>
 
-  <!-- ✅ FOOTER -->
+  <!-- ✅ FOOTER CON NEWSLETTER INTEGRADA -->
   <footer class="footer-gula">
-    <div class="footer-content">
-      <p>🔥 Sabor que enciende tus pecados. Hecho con pasión por <strong>GULA</strong> 🍔</p>
-      <a href="https://www.instagram.com/tu_usuario" target="_blank" class="instagram-btn" title="Síguenos en Instagram">
-        <i class="fab fa-instagram"></i>
-      </a>
+    <div class="newsletter-content">
+      <h3>¿Quieres descuentos exclusivos?</h3>
+      <p>Suscríbete a nuestra newsletter y recibe promociones y novedades</p>
+      <form class="newsletter-form">
+        <input type="email" placeholder="tu@email.com" required>
+        <button type="submit" class="btn-subscribe">Suscribirse</button>
+      </form>
+    </div>
+
+    <div class="footer-main">
+      <div class="footer-logo">
+        <img src="https://gula-hamburguesas.s3.us-east-1.amazonaws.com/20250404_1704_GULA+Edgy+Burger+Logo_simple_compose_01jr0narqrebrva5ge7tefa84x.png" alt="Logo Gula" class="footer-logo-img" />
+        <p>Sabor que enciende tus pecados</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-section">
+          <h4>Navegación</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="menu.html">Carta</a></li>
+            <li><a href="foodtruck.html">FoodTruck</a></li>
+          </ul>
+        </div>
+       
+        <div class="footer-section">
+          <h4>Contacto</h4>
+          <ul>
+            <li><i class="fas fa-map-marker-alt"></i> C/ Hamburguesa, 42</li>
+            <li><i class="fas fa-phone"></i> +34 600 123 456</li>
+            <li><i class="fas fa-envelope"></i> info@gulaburger.com</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-social">
+        <h4>Síguenos</h4>
+        <div class="social-icons">
+          <a href="https://www.instagram.com/gula_burger" target="_blank" title="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.facebook.com/gulaburger" target="_blank" title="Facebook">
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a href="https://www.tiktok.com/@gulaburger" target="_blank" title="TikTok">
+            <i class="fab fa-tiktok"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 GULA Burgers. Todos los derechos reservados.</p>
     </div>
   </footer>
 
