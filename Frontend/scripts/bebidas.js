@@ -1,188 +1,639 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const grid = document.getElementById('grid-bebidas');
-  const filtroBtns = document.querySelectorAll('.filtro-btn');
-
+  // Variables globales
+  const productosGrid = document.getElementById('productos-grid');
   const modal = document.getElementById('producto-modal');
-  const modalImg = document.getElementById('modal-img');
-  const modalNombre = document.getElementById('modal-nombre');
-  const modalDescripcion = document.getElementById('modal-descripcion');
-  const modalPrecio = document.getElementById('modal-precio');
-  const cantidadSpan = document.getElementById('cantidad');
-  const cerrarModalBtn = document.querySelector('.cerrar-modal');
-  const btnAgregar = document.getElementById('agregar-carrito');
-  let cantidad = 1;
-  let bebidaSeleccionada = null;
-
-  const token = localStorage.getItem('token');
-
-  // ✅ Cargar bebidas desde backend
-  async function cargarBebidas() {
-    try {
-      const res = await fetch('http://localhost:3000/api/bebidas');
-      const bebidas = await res.json();
-      renderBebidas(bebidas);
-    } catch (err) {
-      console.error('❌ Error al cargar bebidas:', err);
+  const closeModal = document.querySelector('.close-modal');
+  const filtrosBtns = document.querySelectorAll('.filtro-btn');
+  const categoriasItems = document.querySelectorAll('.categoria-item');
+  
+  // Datos de bebidas
+  const bebidas = [
+    {
+      id: 201,
+      nombre: "BATIDO PECAMINOSO",
+      descripcion: "Batido de chocolate, café y crema montada con sirope de caramelo",
+      precio: 5.95,
+      imagen: "../imagenes/batidochocolate.png",
+      rating: 4.8,
+      badge: "bestseller",
+      badgeText: "BESTSELLER",
+      calorias: "650",
+      tiempoPreparacion: "5 min",
+      alcoholic: false,
+      nuevo: true,
+      vegetariano: true,
+      ingredientes: ["Helado de vainilla", "Chocolate belga", "Café espresso", "Crema montada", "Sirope de caramelo"]
+    },
+    {
+      id: 202,
+      nombre: "NÉCTAR DE LUJURIA",
+      descripcion: "Smoothie de frutos rojos, plátano y yogur griego con topping de granola",
+      precio: 6.50,
+      imagen: "../imagenes/batidochocolate.png", // Placeholder
+      rating: 4.7,
+      badge: "new",
+      badgeText: "NUEVO",
+      calorias: "450",
+      tiempoPreparacion: "5 min",
+      alcoholic: false,
+      nuevo: true,
+      vegetariano: true,
+      ingredientes: ["Fresas", "Frambuesas", "Plátano", "Yogur griego", "Miel", "Granola casera"]
+    },
+    {
+      id: 203,
+      nombre: "DEMONIO ROJO",
+      descripcion: "Cóctel de vodka, licor de sandía, fresas y un toque de chile",
+      precio: 8.95,
+      imagen: "../imagenes/batidochocolate.png", // Placeholder
+      rating: 4.6,
+      badge: "spicy",
+      badgeText: "PICANTE",
+      calorias: "320",
+      tiempoPreparacion: "8 min",
+      alcoholic: true,
+      nuevo: false,
+      vegetariano: true,
+      ingredientes: ["Vodka premium", "Licor de sandía", "Puré de fresas", "Chile", "Hielo", "Decoración de fresa"]
+    },
+    {
+      id: 204,
+      nombre: "ORGULLO CÍTRICO",
+      descripcion: "Cóctel premium de gin, tónica de cítricos, naranja y romero fresco",
+      precio: 9.95,
+      imagen: "../imagenes/batidochocolate.png", // Placeholder
+      rating: 4.9,
+      badge: "bestseller",
+      badgeText: "PREMIUM",
+      calorias: "280",
+      tiempoPreparacion: "10 min",
+      alcoholic: true,
+      nuevo: false,
+      vegetariano: true,
+      ingredientes: ["Gin premium", "Tónica de cítricos", "Naranja sanguina", "Romero fresco", "Hielo artesanal"]
+    },
+    {
+      id: 205,
+      nombre: "PEREZA TROPICAL",
+      descripcion: "Piña colada cremosa con ron añejo, piña natural y coco",
+      precio: 8.50,
+      imagen: "../imagenes/batidochocolate.png", // Placeholder
+      rating: 4.5,
+      badge: "",
+      badgeText: "",
+      calorias: "540",
+      tiempoPreparacion: "7 min",
+      alcoholic: true,
+      nuevo: false,
+      vegetariano: true,
+      ingredientes: ["Ron añejo", "Piña natural", "Leche de coco", "Crema de coco", "Hielo pilé", "Decoración de piña"]
+    },
+    {
+      id: 206,
+      nombre: "LIMONADA VERDE",
+      descripcion: "Refrescante limonada casera con menta, pepino y un toque de jengibre",
+      precio: 4.95,
+      imagen: "../imagenes/batidochocolate.png", // Placeholder
+      rating: 4.6,
+      badge: "vegan",
+      badgeText: "VEGANA",
+      calorias: "180",
+      tiempoPreparacion: "5 min",
+      alcoholic: false,
+      nuevo: false,
+      vegetariano: true,
+      ingredientes: ["Limones frescos", "Pepino", "Menta", "Jengibre", "Azúcar de caña", "Agua mineral"]
+    },
+    {
+      id: 207,
+      nombre: "TENTACIÓN DORADA",
+      descripcion: "Cerveza artesanal tipo IPA con notas cítricas y amargor equilibrado",
+      precio: 5.50,
+      imagen: "../imagenes/batidochocolate.png", // Placeholder
+      rating: 4.7,
+      badge: "",
+      badgeText: "",
+      calorias: "220",
+      tiempoPreparacion: "1 min",
+      alcoholic: true,
+      nuevo: false,
+      vegetariano: true,
+      ingredientes: ["Cerveza artesanal", "Malta de cebada", "Lúpulos aromáticos", "Levadura especial"]
+    },
+    {
+      id: 208,
+      nombre: "CAFÉ DEL INFIERNO",
+      descripcion: "Café espresso doble con licor de avellana, canela y crema batida",
+      precio: 6.95,
+      imagen: "../imagenes/batidochocolate.png", // Placeholder
+      rating: 4.8,
+      badge: "new",
+      badgeText: "NUEVO",
+      calorias: "380",
+      tiempoPreparacion: "6 min",
+      alcoholic: true,
+      nuevo: true,
+      vegetariano: true,
+      ingredientes: ["Espresso doble", "Licor de avellana", "Canela", "Crema batida", "Virutas de chocolate"]
     }
-  }
+  ];
 
-  // ✅ Renderizar tarjetas de bebidas
-  function renderBebidas(bebidas) {
-  grid.innerHTML = '';
-  bebidas.forEach(b => {
-    const card = document.createElement('div');
-    card.classList.add('bebida-card');
-    card.innerHTML = `
-      <div class="bebida-imagen">
-        <img src="${b.imagen}" alt="${b.nombre}" />
-        ${b.destacada ? `<span class="bebida-etiqueta">Destacada</span>` : ''}
-      </div>
-      <div class="bebida-info">
-        <h3>${b.nombre}</h3>
-        <p>${b.descripcion}</p>
-        <div class="bebida-footer">
-          <span class="bebida-precio">${Number(b.precio).toFixed(2)} €</span>
+  // Datos de hamburguesas (para que pueda existir la navegación)
+  const hamburguesas = [
+    {
+      id: 1,
+      nombre: "LA GULA",
+      descripcion: "Doble smash burger, queso ahumado, bacon crujiente y salsa especial",
+      precio: 13.95,
+      imagen: "../imagenes/la-gula.jpg",
+      rating: 4.8,
+      badge: "bestseller",
+      badgeText: "BESTSELLER",
+      calorias: "850",
+      tiempoPreparacion: "15 min",
+      spicy: false,
+      nuevo: false,
+      vegetariano: false,
+      ingredientes: ["Carne de ternera 100%", "Queso cheddar ahumado", "Bacon crujiente", "Salsa GULA especial", "Pan brioche"]
+    }
+  ];
+  
+  // Datos de acompañantes (para la navegación)
+  const acompanantes = [
+    {
+      id: 101,
+      nombre: "PATATAS DEL INFIERNO",
+      descripcion: "Patatas fritas crujientes con salsa picante, queso fundido y bacon",
+      precio: 6.95,
+      imagen: "../imagenes/patatas.jpg",
+      rating: 4.7,
+      badge: "bestseller",
+      badgeText: "BESTSELLER",
+      calorias: "520",
+      tiempoPreparacion: "10 min",
+      spicy: true,
+      nuevo: false,
+      vegetariano: false,
+      ingredientes: ["Patatas frescas", "Salsa picante casera", "Queso cheddar fundido", "Bacon crujiente", "Cebollino"]
+    }
+  ];
+  
+  // Datos de postres (para la navegación)
+  const postres = [
+    {
+      id: 301,
+      nombre: "TARTA DEL PECADO",
+      descripcion: "Tarta de chocolate intenso con centro líquido y helado de vainilla",
+      precio: 7.50,
+      imagen: "../imagenes/tarta.jpg",
+      rating: 4.9,
+      badge: "new",
+      badgeText: "NUEVO",
+      calorias: "750",
+      tiempoPreparacion: "10 min",
+      spicy: false,
+      nuevo: true,
+      vegetariano: true,
+      ingredientes: ["Chocolate negro 70%", "Mantequilla", "Huevos", "Azúcar", "Helado de vainilla", "Frutos rojos"]
+    }
+  ];
+
+  // Cargar productos iniciales (bebidas por defecto)
+  cargarProductos(bebidas);
+  
+  // Setup filtros de tipos de producto
+  categoriasItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // Obtener el href para determinar a qué página navegar
+      const categoria = item.querySelector('.categoria-link').getAttribute('href');
+      
+      // Si es bebidas.html, actualizar vista actual sin recargar
+      if (categoria.includes('bebidas')) {
+        // Actualizar clase activa
+        categoriasItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        
+        // Restablecer filtros secundarios
+        filtrosBtns.forEach(btn => btn.classList.remove('active'));
+        document.querySelector('.filtro-btn[data-filter="all"]').classList.add('active');
+        
+        cargarProductos(bebidas);
+        actualizarIconoHero('fa-glass-cheers');
+      } else {
+        // Si es otra categoría, navegar a esa página
+        window.location.href = categoria;
+      }
+    });
+  });
+  
+  // Setup filtros secundarios
+  filtrosBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filtrosBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      const filtro = btn.getAttribute('data-filter');
+      
+      if (filtro === 'all') {
+        cargarProductos(bebidas);
+      } else {
+        const productosFiltrados = bebidas.filter(p => {
+          if (filtro === 'bestseller' && p.badge === 'bestseller') return true;
+          if (filtro === 'new' && p.nuevo) return true;
+          if (filtro === 'alcoholic' && p.alcoholic) return true;
+          if (filtro === 'vegan' && p.vegetariano) return true;
+          return false;
+        });
+        
+        cargarProductos(productosFiltrados);
+      }
+    });
+  });
+  
+  // Función para actualizar el icono del héroe según la categoría
+  function actualizarIconoHero(iconClass) {
+    const heroIcon = document.querySelector('.sin-symbol i');
+    heroIcon.className = '';
+    heroIcon.classList.add('fas', iconClass);
+    
+    const dividerIcon = document.querySelector('.divider i');
+    dividerIcon.className = '';
+    dividerIcon.classList.add('fas', iconClass);
+  }
+  
+  // Cerrar modal
+  closeModal.addEventListener('click', () => {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  });
+  
+  // Cerrar modal con Escape
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.style.display === 'block') {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+  });
+  
+  // Cerrar modal al hacer clic fuera
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+  });
+  
+  // Setup brasas flotantes
+  setupFloatingEmbers();
+
+  // Funciones principales
+  function cargarProductos(productosArray) {
+    productosGrid.innerHTML = '';
+    
+    // Mensaje si no hay productos
+    if (productosArray.length === 0) {
+      const noProductos = document.createElement('div');
+      noProductos.className = 'no-productos';
+      noProductos.innerHTML = `
+        <i class="fas fa-search"></i>
+        <h3>No hay productos disponibles</h3>
+        <p>Prueba a cambiar los filtros o selecciona otra categoría</p>
+      `;
+      productosGrid.appendChild(noProductos);
+      return;
+    }
+    
+    productosArray.forEach(producto => {
+      // Crear tarjeta de producto
+      const card = document.createElement('div');
+      card.className = 'producto-card';
+      card.dataset.id = producto.id;
+      
+      // Determinar rating visual (estrellas)
+      const estrellas = generarEstrellas(producto.rating);
+      
+      card.innerHTML = `
+        ${producto.badge ? `<div class="producto-badge badge-${producto.badge}">${producto.badgeText}</div>` : ''}
+        <div class="producto-img-container">
+          <img src="${producto.imagen}" alt="${producto.nombre}">
+          <div class="producto-overlay"></div>
+        </div>
+        <div class="producto-content">
           <div>
-            <button onclick="abrirEditar(${b.id})" class="btn-editar"><i class="fas fa-pen"></i></button>
-            <button onclick="eliminarBebida(${b.id})" class="btn-eliminar"><i class="fas fa-trash"></i></button>
+            <h3 class="producto-nombre">${producto.nombre}</h3>
+            <div class="estrellas-container">
+              ${estrellas}
+            </div>
           </div>
+          <div class="producto-footer">
+            <span class="producto-precio">${producto.precio.toFixed(2)}€</span>
+            <button class="add-btn"><i class="fas fa-plus"></i></button>
+          </div>
+        </div>
+      `;
+      
+      // Evento para abrir el modal con detalles
+      card.addEventListener('click', () => {
+        abrirModal(producto);
+      });
+      
+      // Para el botón de añadir al carrito, evitar propagación
+      const addBtn = card.querySelector('.add-btn');
+      addBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        añadirAlCarrito(producto, 1);
+      });
+      
+      productosGrid.appendChild(card);
+    });
+    
+    // Añadir animación de entrada
+    setTimeout(() => {
+      const productos = document.querySelectorAll('.producto-card');
+      productos.forEach((producto, index) => {
+        setTimeout(() => {
+          producto.style.opacity = '0';
+          producto.style.transform = 'translateY(20px)';
+          
+          setTimeout(() => {
+            producto.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            producto.style.opacity = '1';
+            producto.style.transform = 'translateY(0)';
+          }, 50);
+        }, index * 50);
+      });
+    }, 100);
+  }
+  
+  function abrirModal(producto) {
+    const modalBody = modal.querySelector('.modal-body');
+    
+    // Generar estrellas para rating
+    const estrellas = generarEstrellasInteractivas(producto.rating);
+    
+    // Generar lista de ingredientes
+    let ingredientesHTML = '';
+    producto.ingredientes.forEach(ing => {
+      ingredientesHTML += `
+        <div class="ingredient-tag">
+          <i class="fas fa-check"></i>
+          <span>${ing}</span>
+        </div>
+      `;
+    });
+    
+    // Determinar badge
+    let badgeClass = producto.badge ? 'badge-' + producto.badge : '';
+    
+    modalBody.innerHTML = `
+      <div class="modal-header">
+        <img src="${producto.imagen}" alt="${producto.nombre}">
+        <div class="modal-header-overlay"></div>
+        ${producto.badge ? `<div class="modal-badge ${badgeClass}">${producto.badgeText}</div>` : ''}
+      </div>
+      <div class="modal-detail">
+        <h2 class="modal-title">${producto.nombre}</h2>
+        <p class="modal-description">${producto.descripcion}</p>
+        
+        <div class="modal-info">
+          <div class="info-group">
+            <div class="info-label">Precio</div>
+            <div class="info-value highlight">${producto.precio.toFixed(2)}€</div>
+          </div>
+          <div class="info-group">
+            <div class="info-label">Calorías</div>
+            <div class="info-value">${producto.calorias} kcal</div>
+          </div>
+          <div class="info-group">
+            <div class="info-label">Tiempo</div>
+            <div class="info-value">${producto.tiempoPreparacion}</div>
+          </div>
+          <div class="info-group">
+            <div class="info-label">Tipo</div>
+            <div class="info-value">${producto.alcoholic ? 'Con Alcohol' : 'Sin Alcohol'}</div>
+          </div>
+        </div>
+        
+        <div class="ingredients-title">Ingredientes</div>
+        <div class="ingredients-list">
+          ${ingredientesHTML}
+        </div>
+        
+        <div class="rating-section">
+          <div class="rating-title">¿Qué te ha parecido este producto?</div>
+          <div class="rating-stars" data-product-id="${producto.id}">
+            ${estrellas}
+          </div>
+        </div>
+        
+        <div class="modal-actions">
+          <div class="quantity-selector">
+            <div class="quantity-btn minus-btn">-</div>
+            <input type="number" class="quantity-input" value="1" min="1" max="10">
+            <div class="quantity-btn plus-btn">+</div>
+          </div>
+          <button class="add-to-cart-btn">
+            <i class="fas fa-shopping-cart"></i>
+            Añadir al carrito
+          </button>
         </div>
       </div>
     `;
-    grid.appendChild(card);
-  });
-}
-window.eliminarBebida = async (id) => {
-  if (!confirm('¿Eliminar esta bebida?')) return;
-  try {
-    const res = await fetch(`http://localhost:3000/api/bebidas/${id}`, {
-      method: 'DELETE',
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    const data = await res.json();
-    alert(data.mensaje);
-    cargarBebidas();
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-window.abrirEditar = (id) => {
-  // Puedes reutilizar el modal y rellenarlo con datos desde fetch
-  // para editar, muy similar al agregar
-};
-
-  
-
-  // ✅ Filtros por categoría
-  filtroBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filtroBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const categoria = btn.dataset.categoria;
-
-      document.querySelectorAll('.bebida-card').forEach(card => {
-        const cat = card.dataset.categoria;
-        card.style.display = (categoria === 'todos' || categoria === cat) ? 'flex' : 'none';
-      });
-    });
-  });
-
-  // ✅ Mostrar modal de producto
-  function mostrarModal(bebida) {
-    modalImg.src = bebida.imagen;
-    modalNombre.textContent = bebida.nombre;
-    modalDescripcion.textContent = bebida.descripcion;
-    modalPrecio.textContent = parseFloat(bebida.precio).toFixed(2) + ' €';
-    cantidadSpan.textContent = cantidad;
-    modal.classList.add('mostrar');
-  }
-
-  // ✅ Cerrar modal
-  cerrarModalBtn.addEventListener('click', () => {
-    modal.classList.remove('mostrar');
-  });
-
-  // ✅ Control de cantidad
-  document.getElementById('sumar-cantidad').addEventListener('click', () => {
-    cantidad++;
-    cantidadSpan.textContent = cantidad;
-  });
-
-  document.getElementById('restar-cantidad').addEventListener('click', () => {
-    if (cantidad > 1) {
-      cantidad--;
-      cantidadSpan.textContent = cantidad;
-    }
-  });
-
-  // ✅ Añadir al carrito
-  btnAgregar.addEventListener('click', async () => {
-    if (!token) {
-      mostrarNotificacion('Debes iniciar sesión para añadir al carrito', 'error');
-      return;
-    }
-
-    try {
-      const res = await fetch('http://localhost:3000/api/carrito/agregar', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          bebida_id: bebidaSeleccionada.id,
-          cantidad
-        })
-      });
-
-      if (res.ok) {
-        mostrarNotificacion('✅ Bebida añadida al carrito', 'success');
-        modal.classList.remove('mostrar');
-      } else {
-        const data = await res.json();
-        mostrarNotificacion(data?.mensaje || 'Error al añadir al carrito', 'error');
+    
+    // Configurar selector de cantidad
+    const quantityInput = modalBody.querySelector('.quantity-input');
+    const minusBtn = modalBody.querySelector('.minus-btn');
+    const plusBtn = modalBody.querySelector('.plus-btn');
+    
+    minusBtn.addEventListener('click', () => {
+      let value = parseInt(quantityInput.value);
+      if (value > 1) {
+        quantityInput.value = value - 1;
       }
-    } catch (err) {
-      console.error(err);
-      mostrarNotificacion('Error de conexión con el servidor', 'error');
-    }
-  });
-
-  // ✅ Mostrar notificación
-  function mostrarNotificacion(msg, tipo = 'info') {
-    const noti = document.getElementById('notificacion');
-    const mensaje = document.getElementById('notificacion-mensaje');
-    mensaje.textContent = msg;
-    noti.className = `notificacion mostrar ${tipo}`;
-    setTimeout(() => noti.classList.remove('mostrar'), 3000);
-  }
-
-  cargarBebidas();
-});
-
-document.getElementById('formBebida').addEventListener('submit', async e => {
-  e.preventDefault();
-  const nueva = {
-    nombre: document.getElementById('nuevo-nombre').value,
-    descripcion: document.getElementById('nuevo-descripcion').value,
-    precio: document.getElementById('nuevo-precio').value,
-    imagen: document.getElementById('nuevo-imagen').value,
-    destacada: document.getElementById('nuevo-destacada').checked
-  };
-  try {
-    const res = await fetch('http://localhost:3000/api/bebidas/nueva', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(nueva)
     });
-    const data = await res.json();
-    alert(data.mensaje);
-    cargarBebidas();
-  } catch (err) {
-    console.error(err);
+    
+    plusBtn.addEventListener('click', () => {
+      let value = parseInt(quantityInput.value);
+      if (value < 10) {
+        quantityInput.value = value + 1;
+      }
+    });
+    
+    // Configurar botón añadir al carrito
+    const addToCartBtn = modalBody.querySelector('.add-to-cart-btn');
+    addToCartBtn.addEventListener('click', () => {
+      const cantidad = parseInt(quantityInput.value);
+      añadirAlCarrito(producto, cantidad);
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    });
+    
+    // Configurar sistema de valoración
+    const ratingStars = modalBody.querySelectorAll('.rating-star');
+    ratingStars.forEach((star, index) => {
+      star.addEventListener('click', () => {
+        const rating = index + 1;
+        valorarProducto(producto.id, rating);
+        
+        // Actualizar estrellas visuales
+        ratingStars.forEach((s, i) => {
+          if (i < rating) {
+            s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        });
+        
+        // Mensaje de confirmación
+        const ratingSection = modalBody.querySelector('.rating-section');
+        const alreadyRated = document.createElement('div');
+        alreadyRated.className = 'already-rated';
+        alreadyRated.textContent = '¡Gracias por tu valoración!';
+        ratingSection.appendChild(alreadyRated);
+      });
+    });
+    
+    // Mostrar modal con animación
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function generarEstrellas(rating) {
+    let estrellas = '';
+    for (let i = 1; i <= 5; i++) {
+      if (i <= Math.floor(rating)) {
+        estrellas += '<i class="fas fa-star estrella active"></i>';
+      } else if (i === Math.ceil(rating) && !Number.isInteger(rating)) {
+        estrellas += '<i class="fas fa-star-half-alt estrella active"></i>';
+      } else {
+        estrellas += '<i class="far fa-star estrella"></i>';
+      }
+    }
+    return estrellas;
+  }
+  
+  function generarEstrellasInteractivas(rating) {
+    let estrellas = '';
+    for (let i = 1; i <= 5; i++) {
+      if (i <= Math.floor(rating)) {
+        estrellas += `<i class="fas fa-star rating-star active" data-rating="${i}"></i>`;
+      } else if (i === Math.ceil(rating) && !Number.isInteger(rating)) {
+        estrellas += `<i class="fas fa-star-half-alt rating-star active" data-rating="${i}"></i>`;
+      } else {
+        estrellas += `<i class="far fa-star rating-star" data-rating="${i}"></i>`;
+      }
+    }
+    return estrellas;
+  }
+  
+  function añadirAlCarrito(producto, cantidad) {
+    // Aquí iría la lógica de conexión con el backend
+    // En este ejemplo, solo mostramos una notificación
+    
+    // Actualizar contador del carrito (simulación)
+    const cartCount = document.querySelector('.cart-count');
+    let currentCount = parseInt(cartCount.textContent);
+    cartCount.textContent = currentCount + cantidad;
+    cartCount.style.display = 'flex';
+    
+    // Mostrar notificación
+    mostrarNotificacion(`${cantidad}x ${producto.nombre} añadido al carrito`, 'success');
+    
+    // Simular animación de "vuelo" al carrito
+    const cartIcon = document.querySelector('.cart-icon');
+    const cartRect = cartIcon.getBoundingClientRect();
+    
+    const flyingItem = document.createElement('div');
+    flyingItem.className = 'flying-item';
+    flyingItem.innerHTML = '<i class="fas fa-glass-cheers"></i>';
+    flyingItem.style.position = 'fixed';
+    flyingItem.style.zIndex = '9999';
+    flyingItem.style.fontSize = '20px';
+    flyingItem.style.color = 'var(--secondary-color)';
+    flyingItem.style.transition = 'all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1)';
+    
+    // Posición inicial
+    flyingItem.style.top = `${window.innerHeight / 2}px`;
+    flyingItem.style.left = `${window.innerWidth / 2}px`;
+    
+    document.body.appendChild(flyingItem);
+    
+    // Forzar reflow
+    flyingItem.getBoundingClientRect();
+    
+    // Posición final (carrito)
+    flyingItem.style.top = `${cartRect.top + 10}px`;
+    flyingItem.style.left = `${cartRect.left + 10}px`;
+    flyingItem.style.opacity = '0';
+    flyingItem.style.transform = 'scale(0.3)';
+    
+    // Limpiar después de la animación
+    setTimeout(() => {
+      flyingItem.remove();
+    }, 700);
+  }
+  
+  function valorarProducto(productoId, rating) {
+    // Simulación - aquí iría la lógica de conexión con el backend
+    console.log(`Producto ${productoId} valorado con ${rating} estrellas`);
+  }
+  
+  function mostrarNotificacion(mensaje, tipo = 'info') {
+    const notificacion = document.getElementById('notification');
+    const notificationMsg = notificacion.querySelector('.notification-message');
+    const notificationIcon = notificacion.querySelector('.notification-icon');
+    
+    // Configurar icono según tipo
+    if (tipo === 'success') {
+      notificationIcon.className = 'notification-icon fas fa-check-circle';
+    } else if (tipo === 'error') {
+      notificationIcon.className = 'notification-icon fas fa-exclamation-circle';
+    } else {
+      notificationIcon.className = 'notification-icon fas fa-info-circle';
+    }
+    
+    // Actualizar mensaje
+    notificationMsg.textContent = mensaje;
+    
+    // Mostrar notificación
+    notificacion.classList.add('show');
+    
+    // Ocultar después de 3 segundos
+    setTimeout(() => {
+      notificacion.classList.remove('show');
+    }, 3000);
+  }
+  
+  function setupFloatingEmbers() {
+    const embersContainer = document.querySelector('.floating-embers');
+    if (!embersContainer) return;
+    
+    // Crear brasas adicionales
+    for (let i = 0; i < 20; i++) {
+      const ember = document.createElement('div');
+      ember.className = 'floating-ember';
+      
+      // Propiedades aleatorias
+      const size = Math.random() * 6 + 4; // 4-10px
+      ember.style.width = `${size}px`;
+      ember.style.height = `${size}px`;
+      
+      // Posición horizontal aleatoria
+      ember.style.left = `${Math.random() * 100}%`;
+      
+      // Colores aleatorios
+      const colors = ['#00ffcc', '#0099ff', '#33ccff', '#66ffff'];
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      ember.style.backgroundColor = randomColor;
+      ember.style.boxShadow = `0 0 10px ${randomColor}`;
+      
+      // Retraso y duración aleatorios
+      ember.style.animationDelay = `${Math.random() * 5}s`;
+      ember.style.animationDuration = `${Math.random() * 7 + 8}s`; // 8-15s
+      
+      embersContainer.appendChild(ember);
+    }
   }
 });
