@@ -4,7 +4,6 @@ import com.gula.backend.repository.UsuarioRepository;
 import com.gula.backend.service.JwtService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -51,10 +50,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable) // Deshabilitamos porque usamos nuestro filtro personalizado
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/productos/**").permitAll()
+                        .requestMatchers("/api/restaurantes/**").permitAll() // Permitimos acceso público a restaurantes
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/empleado/**").hasRole("EMPLEADO")
                         .requestMatchers("/api/cliente/**").hasRole("CLIENTE")

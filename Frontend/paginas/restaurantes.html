@@ -94,71 +94,17 @@
     </section>
 
     <!-- RESTAURANTES DESTACADOS -->
-    <section class="featured-restaurants">
-      <div class="section-heading centered">
-        <div class="flame-icon"><i class="fas fa-fire"></i></div>
-        <h2>RESTAURANTES DESTACADOS</h2>
-      </div>
-      
-      <div class="restaurant-grid">
-        <!-- Madrid -->
-        <div class="restaurant-card">
-          <div class="restaurant-image">
-            <img src="../imagenes/restaurantemadrid.png" alt="GULA Madrid">
-            <div class="location-badge">MADRID</div>
-          </div>
-          <div class="restaurant-info">
-            <h3>GULA GRAN VÍA</h3>
-            <p class="restaurant-address"><i class="fas fa-map-marker-alt"></i> Gran Vía 41, Madrid</p>
-            <p class="restaurant-hours"><i class="fas fa-clock"></i> 13:00 - 00:00</p>
-            <div class="restaurant-features">
-              <span><i class="fas fa-parking"></i> Parking</span>
-              <span><i class="fas fa-wifi"></i> WiFi</span>
-              <span><i class="fas fa-glass-cheers"></i> Bar</span>
-            </div>
-            <button class="reserve-btn" data-restaurant="madrid" onclick="window.location.href='reservas.html?restaurante=madrid'">RESERVAR MESA</button>
-          </div>
-        </div>
-        
-        <!-- Barcelona -->
-        <div class="restaurant-card">
-          <div class="restaurant-image">
-            <img src="../imagenes/restaurantebarcelona.png" alt="GULA Barcelona">
-            <div class="location-badge">BARCELONA</div>
-          </div>
-          <div class="restaurant-info">
-            <h3>GULA DIAGONAL</h3>
-            <p class="restaurant-address"><i class="fas fa-map-marker-alt"></i> Avinguda Diagonal 520, Barcelona</p>
-            <p class="restaurant-hours"><i class="fas fa-clock"></i> 12:00 - 01:00</p>
-            <div class="restaurant-features">
-              <span><i class="fas fa-parking"></i> Parking</span>
-              <span><i class="fas fa-wifi"></i> WiFi</span>
-              <span><i class="fas fa-glass-cheers"></i> Bar</span>
-            </div>
-            <button class="reserve-btn" data-restaurant="barcelona" onclick="window.location.href='reservas.html?restaurante=barcelona'">RESERVAR MESA</button>
-          </div>
-        </div>
-        
-        <!-- Valencia -->
-        <div class="restaurant-card">
-          <div class="restaurant-image">
-            <img src="../imagenes/restaurantevalencia.png" alt="GULA Valencia">
-            <div class="location-badge">VALENCIA</div>
-          </div>
-          <div class="restaurant-info">
-            <h3>GULA CIUTAT VELLA</h3>
-            <p class="restaurant-address"><i class="fas fa-map-marker-alt"></i> Carrer de Quart 35, Valencia</p>
-            <p class="restaurant-hours"><i class="fas fa-clock"></i> 13:30 - 23:30</p>
-            <div class="restaurant-features">
-              <span><i class="fas fa-parking"></i> Parking</span>
-              <span><i class="fas fa-wifi"></i> WiFi</span>
-              <span><i class="fas fa-utensils"></i> Terraza</span>
-            </div>
-            <button class="reserve-btn" data-restaurant="valencia" onclick="window.location.href='reservas.html?restaurante=valencia'">RESERVAR MESA</button>
-          </div>
-        </div>
-      </div>
-    </section>
+<section class="featured-restaurants">
+  <div class="section-heading centered">
+    <div class="flame-icon"><i class="fas fa-fire"></i></div>
+    <h2>RESTAURANTES DESTACADOS</h2>
+  </div>
+
+  <div class="restaurant-grid" id="restaurantes-destacados">
+    <!-- Tarjetas cargadas dinámicamente desde restaurantes.js -->
+  </div>
+</section>
+
     
     <!-- INFORMACIÓN RESTAURANTES -->
     <section class="restaurant-info-section">
