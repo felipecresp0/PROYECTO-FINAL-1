@@ -12,35 +12,35 @@ document.addEventListener("DOMContentLoaded", () => {
   const paradasFoodtruck = [
     {
       ciudad: "Madrid",
-      fecha: "12 de mayo",
+      fecha: "12th of may",
       img: "../imagenes/madrid.webp",
       ubicacion: "Mercado de San Miguel",
       horario: "18:00 - 00:00"
     },
     {
       ciudad: "Valencia",
-      fecha: "20 de mayo",
+      fecha: "20th of may",
       img: "../imagenes/valencia.jpg",
       ubicacion: "Plaza de la Reina",
       horario: "19:00 - 01:00"
     },
     {
       ciudad: "Sevilla",
-      fecha: "5 de junio",
+      fecha: "5th of june",
       img: "../imagenes/sevilla.jpg",
       ubicacion: "Parque de María Luisa",
       horario: "18:30 - 23:30"
     },
     {
       ciudad: "Barcelona",
-      fecha: "15 de junio",
+      fecha: "15th of june",
       img: "../imagenes/barcelona.webp",
       ubicacion: "Playa de la Barceloneta",
       horario: "19:00 - 02:00"
     },
     {
       ciudad: "Zaragoza",
-      fecha: "30 de junio",
+      fecha: "30th of June",
       img: "../imagenes/zaragoza.jpg",
       ubicacion: "Plaza del Pilar",
       horario: "18:00 - 23:00"
@@ -139,35 +139,35 @@ function initImprovedCarousel() {
   const paradasFoodtruck = [
     {
       ciudad: "Madrid",
-      fecha: "12 de mayo",
+      fecha: "12th de May",
       img: "../imagenes/madrid.webp",
       ubicacion: "Mercado de San Miguel",
       horario: "18:00 - 00:00"
     },
     {
       ciudad: "Valencia",
-      fecha: "20 de mayo",
+      fecha: "20th de May",
       img: "../imagenes/valencia.jpg",
       ubicacion: "Plaza de la Reina",
       horario: "19:00 - 01:00"
     },
     {
       ciudad: "Sevilla",
-      fecha: "5 de junio",
+      fecha: "5th of June",
       img: "../imagenes/sevilla.jpg",
       ubicacion: "Parque de María Luisa",
       horario: "18:30 - 23:30"
     },
     {
       ciudad: "Barcelona",
-      fecha: "15 de junio",
+      fecha: "15th of June",
       img: "../imagenes/barcelona.webp",
       ubicacion: "Playa de la Barceloneta",
       horario: "19:00 - 02:00"
     },
     {
       ciudad: "Zaragoza",
-      fecha: "30 de junio",
+      fecha: "30th of June",
       img: "../imagenes/zaragoza.jpg",
       ubicacion: "Plaza del Pilar",
       horario: "18:00 - 23:00"
@@ -186,7 +186,7 @@ function initImprovedCarousel() {
       <p class="item-price">${parada.fecha}</p>
       <p class="item-location"><i class="fas fa-map-marker-alt"></i> ${parada.ubicacion}</p>
       <p class="item-location"><i class="fas fa-clock"></i> ${parada.horario}</p>
-      <button class="order-btn" data-ciudad="${parada.ciudad}" data-fecha="${parada.fecha}">RESERVAR</button>
+      <button class="order-btn" data-ciudad="${parada.ciudad}" data-fecha="${parada.fecha}">RESERVE</button>
     `;
     
     track.appendChild(card);

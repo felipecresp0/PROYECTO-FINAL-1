@@ -1,387 +1,369 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GULA | Panel de Administración</title>
-  <link rel="stylesheet" href="../styles/principal.css/" />
+  <title>GULA Admin | Infernal Control Panel</title>
+  
   <link rel="stylesheet" href="../styles/admin.css" />
+  <script defer src="../scripts/admin.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <script defer src="../scripts/admin.js"></script>
 </head>
 <body>
+
   <!-- HEADER -->
   <header class="header">
     <div class="logo">
       <a href="index.html">
-        <img src="../Imagenes/fondo.png" alt="Logo Gula" class="logo-img" />
+        <img src="../Imagenes/logo.png" alt="Logo Gula" class="logo-img" />
       </a>
     </div>
     <nav class="nav-links">
       <a href="index.html">Home</a>
-      <a href="menu.html">Menú</a>
+      <a href="menu.html">Menu</a>
       <a href="foodtruck.html">FoodTruck</a>
-      <a href="restaurantes.html">Restaurantes</a>
-      <a href="admin.html" class="active">Admin</a>
+      <a href="restaurantes.html">Restaurants</a>
+      <a href="admin.html" class="active">Intranet</a>
     </nav>
     <div class="header-right">
-      <button class="sign-in-btn" onclick="location.href='index.html'">SALIR</button>
+      <i class="fas fa-search search-icon" id="search-toggle"></i>
+      <i class="fas fa-shopping-cart cart-icon" onclick="location.href='carrito.html'"><span class="cart-count">0</span></i>
+      <button class="sign-in-btn" onclick="location.href='acceso.html'">SIGN IN</button>
       <div class="menu-toggle">
         <i class="fas fa-bars"></i>
       </div>
     </div>
   </header>
   
-  <!-- ADMIN PANEL CONTENT -->
-  <main class="admin-main-content">
-    <div class="admin-header">
-      <div class="sin-symbol admin-icon">
-        <i class="fas fa-lock"></i>
-      </div>
-      <h1>PANEL DE ADMINISTRACIÓN</h1>
-      <p class="admin-subtitle">Gestiona todos los aspectos de GULA</p>
+  <!-- SEARCH OVERLAY -->
+  <div class="search-overlay">
+    <div class="search-box">
+      <input type="text" placeholder="Which sin are you looking for?" class="search-input-overlay">
+      <button class="search-btn-overlay"><i class="fas fa-search"></i></button>
     </div>
+    <i class="fas fa-times close-search"></i>
+  </div>
 
-    <!-- Admin Navigation -->
-    <div class="admin-nav">
+  <!-- HERO BANNER -->
+  <section class="hero-banner">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>INFERNAL <span class="highlight">CONTROL</span></h1>
+      <p>ADMINISTRATION PANEL</p>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <main class="contenido">
+    
+    <!-- ADMIN HEADER -->
+    <section class="admin-header">
+      <div class="admin-icon">
+        <i class="fas fa-crown admin-crown"></i>
+      </div>
+      <h1>GULA ADMIN PANEL</h1>
+      <p class="admin-subtitle">Control the Empire of Sin</p>
+    </section>
+
+    <!-- ADMIN NAVIGATION -->
+    <nav class="admin-nav">
       <button class="admin-nav-btn active" onclick="mostrarSeccion('hamburguesas')">
-        <i class="fas fa-hamburger"></i> HAMBURGUESAS
+        <i class="fas fa-hamburger"></i> BURGERS
       </button>
       <button class="admin-nav-btn" onclick="mostrarSeccion('reservas')">
-        <i class="fas fa-calendar-alt"></i> RESERVAS
+        <i class="fas fa-calendar-alt"></i> RESERVATIONS
       </button>
       <button class="admin-nav-btn" onclick="mostrarSeccion('empleados')">
-        <i class="fas fa-user-tie"></i> EMPLEADOS
+        <i class="fas fa-users"></i> EMPLOYEES
       </button>
+      <button class="admin-nav-btn" onclick="mostrarSeccion('ventas')">
+        <i class="fas fa-chart-line"></i> SALES
+      </button>
+    </nav>
+
+    <!-- NOTIFICATION ELEMENT -->
+    <div id="notification" class="notification">
+      <i class="notification-icon"></i>
+      <span class="notification-message"></span>
     </div>
 
-    <!-- Admin Content Container -->
-    <div class="admin-content">
-      <!-- SECCIÓN: Hamburguesas -->
-      <section id="seccion-hamburguesas" class="admin-section">
-        <div class="admin-card">
-          <h2><i class="fas fa-hamburger"></i> AÑADIR NUEVA HAMBURGUESA</h2>
-          <form id="form-hamburguesa" class="admin-form">
-            <div class="form-group">
-              <label for="nombre">Nombre:</label>
-              <input type="text" id="nombre" placeholder="Ejemplo: LA SOBERBIA" required>
-            </div>
-            <div class="form-group">
-              <label for="descripcion">Descripción:</label>
-              <textarea id="descripcion" placeholder="Ingredientes y descripción detallada..." required></textarea>
-            </div>
-            <div class="form-group">
-              <label for="precio">Precio (€):</label>
-              <input type="number" step="0.01" id="precio" placeholder="0.00" required>
-            </div>
-            <div class="form-group">
-              <label for="imagen">Imagen:</label>
-              <input type="file" id="imagen" accept="image/*">
-            </div>
-            <div class="form-group">
-              <label for="categoria">Categoría:</label>
-              <select id="categoria">
-                <option value="pecado">Pecado Capital</option>
-                <option value="tentacion">Tentación</option>
-                <option value="acompanamiento">Acompañamiento</option>
-              </select>
-            </div>
-            <button type="submit" class="admin-btn-submit pulse-element">
-              <i class="fas fa-plus-circle"></i> CREAR HAMBURGUESA
-            </button>
-          </form>
-          <p id="mensaje" class="admin-message"></p>
-        </div>
-
-        <div class="admin-card">
-          <h2><i class="fas fa-list"></i> HAMBURGUESAS REGISTRADAS</h2>
-          <div class="admin-table-container">
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Descripción</th>
-                  <th>Precio (€)</th>
-                  <th>Categoría</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody id="lista-hamburguesas">
-                <!-- Filas de ejemplo (se cargarán dinámicamente) -->
-                <tr>
-                  <td>LA GULA</td>
-                  <td>Doble smash burger, queso ahumado fundido, doble de bacon...</td>
-                  <td>13.95</td>
-                  <td>Pecado Capital</td>
-                  <td>
-                    <button class="admin-btn-action edit"><i class="fas fa-edit"></i></button>
-                    <button class="admin-btn-action delete"><i class="fas fa-trash"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>LA LUJURIA</td>
-                  <td>Carne de ternera madurada, queso brie fundido, cebolla...</td>
-                  <td>14.95</td>
-                  <td>Pecado Capital</td>
-                  <td>
-                    <button class="admin-btn-action edit"><i class="fas fa-edit"></i></button>
-                    <button class="admin-btn-action delete"><i class="fas fa-trash"></i></button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- SECCIÓN: Reservas -->
-      <section id="seccion-reservas" class="admin-section" style="display: none;">
-        <div class="admin-card">
-          <h2><i class="fas fa-calendar-alt"></i> RESERVAS POR RESTAURANTE</h2>
+    <!-- BURGERS SECTION -->
+    <section id="seccion-hamburguesas" class="admin-section">
+      <div class="admin-card">
+        <h2><i class="fas fa-plus-circle"></i> Add New Burger</h2>
+        <form id="form-hamburguesa" class="admin-form">
           <div class="form-group">
-            <label for="selector-restaurante">Seleccionar Restaurante:</label>
-            <select id="selector-restaurante" class="admin-select">
-              <option value="todos">Todos los restaurantes</option>
-              <option value="centro">GULA Centro</option>
-              <option value="actur">GULA Actur</option>
+            <label for="nombre">Burger Name</label>
+            <input type="text" id="nombre" placeholder="Sin Name" required>
+          </div>
+          <div class="form-group">
+            <label for="descripcion">Description</label>
+            <textarea id="descripcion" placeholder="Describe the temptation..." required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="precio">Price (€)</label>
+            <input type="number" step="0.01" id="precio" placeholder="0.00" required>
+          </div>
+          <div class="form-group">
+            <label for="categoria">Category</label>
+            <select id="categoria" required>
+              <option value="">Select Sin Category</option>
+              <option value="lust">Lust</option>
+              <option value="gluttony">Gluttony</option>
+              <option value="greed">Greed</option>
+              <option value="sloth">Sloth</option>
+              <option value="wrath">Wrath</option>
+              <option value="envy">Envy</option>
+              <option value="pride">Pride</option>
             </select>
           </div>
-          <div class="admin-table-container">
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Cliente</th>
-                  <th>Fecha</th>
-                  <th>Hora</th>
-                  <th>Personas</th>
-                  <th>Restaurante</th>
-                  <th>Estado</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody id="tabla-reservas-body">
-                <!-- Filas de ejemplo (se cargarán dinámicamente) -->
-                <tr>
-                  <td>001</td>
-                  <td>Carlos Martínez</td>
-                  <td>20/05/2025</td>
-                  <td>20:30</td>
-                  <td>4</td>
-                  <td>GULA Centro</td>
-                  <td><span class="status-pending">Pendiente</span></td>
-                  <td>
-                    <button class="admin-btn-action confirm"><i class="fas fa-check"></i></button>
-                    <button class="admin-btn-action delete"><i class="fas fa-times"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>002</td>
-                  <td>Laura García</td>
-                  <td>21/05/2025</td>
-                  <td>21:00</td>
-                  <td>2</td>
-                  <td>GULA Actur</td>
-                  <td><span class="status-confirmed">Confirmada</span></td>
-                  <td>
-                    <button class="admin-btn-action delete"><i class="fas fa-times"></i></button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
+          <button type="submit" class="admin-btn-submit">
+            <i class="fas fa-fire"></i> CREATE BURGER
+          </button>
+          <div id="mensaje" class="admin-message"></div>
+        </form>
+      </div>
 
-      <!-- SECCIÓN: Empleados -->
-      <section id="seccion-empleados" class="admin-section" style="display: none;">
-        <div class="admin-card">
-          <h2><i class="fas fa-user-tie"></i> REGISTRAR EMPLEADO</h2>
-          <form id="form-empleado" class="admin-form">
-            <div class="form-group">
-              <label for="empleado-nombre">Nombre completo:</label>
-              <input type="text" id="empleado-nombre" placeholder="Nombre y apellidos" required>
-            </div>
-            <div class="form-group">
-              <label for="empleado-email">Email:</label>
-              <input type="email" id="empleado-email" placeholder="correo@ejemplo.com" required>
-            </div>
-            <div class="form-group">
-              <label for="empleado-password">Contraseña:</label>
-              <input type="password" id="empleado-password" placeholder="Contraseña segura" required>
-            </div>
-            <div class="form-group">
-              <label for="empleado-puesto">Puesto:</label>
-              <select id="empleado-puesto">
-                <option value="camarero">Camarero/a</option>
-                <option value="cocina">Cocinero/a</option>
-                <option value="admin">Administrador/a</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="empleado-restaurante">Restaurante:</label>
-              <select id="empleado-restaurante">
-                <option value="centro">GULA Centro</option>
-                <option value="actur">GULA Actur</option>
-              </select>
-            </div>
-            <button type="submit" class="admin-btn-submit pulse-element">
-              <i class="fas fa-user-plus"></i> REGISTRAR EMPLEADO
-            </button>
-          </form>
-          <p id="mensaje-empleado" class="admin-message"></p>
+      <div class="admin-card">
+        <h2><i class="fas fa-list"></i> Registered Burgers</h2>
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price (€)</th>
+                <th>Category</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="lista-hamburguesas">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESERVATIONS SECTION -->
+    <section id="seccion-reservas" class="admin-section" style="display: none;">
+      <div class="admin-card">
+        <h2><i class="fas fa-calendar-check"></i> Registered Reservations</h2>
+        
+        <div class="filter-section">
+          <label for="selector-restaurante">Filter by Restaurant:</label>
+          <select id="selector-restaurante" class="admin-select">
+            <option value="todos">All Restaurants</option>
+          </select>
         </div>
 
-        <div class="admin-card">
-          <h2><i class="fas fa-users"></i> EMPLEADOS REGISTRADOS</h2>
-          <div class="admin-table-container">
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Email</th>
-                  <th>Puesto</th>
-                  <th>Restaurante</th>
-                  <th>Estado</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody id="lista-empleados">
-                <!-- Filas de ejemplo (se cargarán dinámicamente) -->
-                <tr>
-                  <td>Miguel Ángel Pérez</td>
-                  <td>miguel@gula.es</td>
-                  <td>Administrador</td>
-                  <td>GULA Centro</td>
-                  <td><span class="status-active">Activo</span></td>
-                  <td>
-                    <button class="admin-btn-action edit"><i class="fas fa-edit"></i></button>
-                    <button class="admin-btn-action delete"><i class="fas fa-trash"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Ana Martínez</td>
-                  <td>ana@gula.es</td>
-                  <td>Camarera</td>
-                  <td>GULA Actur</td>
-                  <td><span class="status-active">Activo</span></td>
-                  <td>
-                    <button class="admin-btn-action edit"><i class="fas fa-edit"></i></button>
-                    <button class="admin-btn-action delete"><i class="fas fa-trash"></i></button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>People</th>
+                <th>Restaurant</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-reservas-body">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- EMPLOYEES SECTION -->
+    <section id="seccion-empleados" class="admin-section" style="display: none;">
+      <div class="admin-card">
+        <h2><i class="fas fa-user-plus"></i> Register New Employee</h2>
+        <form id="form-empleado" class="admin-form">
+          <div class="form-group">
+            <label for="empleado-nombre">Full Name</label>
+            <input type="text" id="empleado-nombre" placeholder="Employee Name" required>
+          </div>
+          <div class="form-group">
+            <label for="empleado-email">Email</label>
+            <input type="email" id="empleado-email" placeholder="email@gula.com" required>
+          </div>
+          <div class="form-group">
+            <label for="empleado-password">Password</label>
+            <input type="password" id="empleado-password" placeholder="Strong password" required>
+          </div>
+          <div class="form-group">
+            <label for="empleado-puesto">Position</label>
+            <select id="empleado-puesto" required>
+              <option value="">Select Position</option>
+              <option value="camarero">Waiter</option>
+              <option value="cocinero">Cook</option>
+              <option value="manager">Manager</option>
+              <option value="cashier">Cashier</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="empleado-restaurante">Restaurant</label>
+            <select id="empleado-restaurante" required>
+              <option value="">Select Restaurant</option>
+              <option value="madrid">GULA Gran Vía</option>
+              <option value="barcelona">GULA Diagonal</option>
+              <option value="valencia">GULA Ciutat Vella</option>
+              <option value="sevilla">GULA Alameda</option>
+              <option value="zaragoza">GULA Aragón</option>
+            </select>
+          </div>
+          <button type="submit" class="admin-btn-submit">
+            <i class="fas fa-user-check"></i> REGISTER EMPLOYEE
+          </button>
+          <div id="mensaje-empleado" class="admin-message"></div>
+        </form>
+      </div>
+
+      <div class="admin-card">
+        <h2><i class="fas fa-users"></i> Current Employees</h2>
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Position</th>
+                <th>Restaurant</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="lista-empleados">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SALES SECTION -->
+    <section id="seccion-ventas" class="admin-section" style="display: none;">
+      <div class="admin-card">
+        <h2><i class="fas fa-chart-bar"></i> Sales Dashboard</h2>
+        
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-euro-sign"></i>
+            </div>
+            <div class="stat-info">
+              <h3>Today's Sales</h3>
+              <p class="stat-value" id="ventas-hoy">€0.00</p>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-hamburger"></i>
+            </div>
+            <div class="stat-info">
+              <h3>Burgers Sold</h3>
+              <p class="stat-value" id="hamburguesas-vendidas">0</p>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-info">
+              <h3>Active Customers</h3>
+              <p class="stat-value" id="clientes-activos">0</p>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-calendar"></i>
+            </div>
+            <div class="stat-info">
+              <h3>Reservations Today</h3>
+              <p class="stat-value" id="reservas-hoy">0</p>
+            </div>
           </div>
         </div>
-      </section>
-    </div>
+
+        <div class="chart-container">
+          <h3>Weekly Sales Chart</h3>
+          <canvas id="sales-chart" width="400" height="200"></canvas>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- FOOTER -->
   <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-col">
+        <h4>GULA ADMIN</h4>
+        <p>Control panel for the empire of sin.</p>
+        <div class="social-links">
+          <a href="https://www.instagram.com/gulabvrgers/" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>ADMIN TOOLS</h4>
+        <ul>
+          <li><a href="#" onclick="mostrarSeccion('hamburguesas')">Manage Burgers</a></li>
+          <li><a href="#" onclick="mostrarSeccion('reservas')">View Reservations</a></li>
+          <li><a href="#" onclick="mostrarSeccion('empleados')">Employees</a></li>
+          <li><a href="#" onclick="mostrarSeccion('ventas')">Sales Reports</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>SUPPORT</h4>
+        <ul>
+          <li><i class="fas fa-envelope"></i> admin@gula.com</li>
+          <li><i class="fas fa-phone"></i> +34 666 666 666</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>SECURITY</h4>
+        <p>All data is encrypted and secure</p>
+        <div class="security-indicators">
+          <span class="security-badge"><i class="fas fa-shield-alt"></i> SSL</span>
+          <span class="security-badge"><i class="fas fa-lock"></i> Encrypted</span>
+        </div>
+      </div>
+    </div>
     <div class="footer-bottom">
-      <p>🔥 Panel de Administración GULA</p>
-      <p class="copyright">© 2025 GULA. Todos los derechos reservados.</p>
+      <p>🔥 Infernal administration made with passion by <strong>GULA</strong> 🍔</p>
+      <p class="copyright">© 2025 GULA Admin Panel. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- NOTIFICATION COMPONENT -->
-  <div class="notification" id="notification">
-    <i class="notification-icon fas fa-check-circle"></i>
-    <span class="notification-message">Operación realizada con éxito</span>
+  <!-- FLOATING EMBERS -->
+  <div class="floating-embers">
+    <div class="floating-ember floating-ember1"></div>
+    <div class="floating-ember floating-ember2"></div>
+    <div class="floating-ember floating-ember3"></div>
+    <div class="floating-ember floating-ember4"></div>
+    <div class="floating-ember floating-ember5"></div>
+    <div class="floating-ember floating-ember6"></div>
+    <div class="floating-ember floating-ember7"></div>
   </div>
 
-  <!-- SCRIPT PARA NAVEGACIÓN -->
-  <script>
-    function mostrarSeccion(seccion) {
-      // Ocultar todas las secciones
-      document.querySelectorAll('.admin-section').forEach(el => {
-        el.style.display = 'none';
-      });
-      
-      // Mostrar la sección seleccionada
-      document.getElementById('seccion-' + seccion).style.display = 'block';
-      
-      // Actualizar botones activos
-      document.querySelectorAll('.admin-nav-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
-      
-      // Encontrar el botón correspondiente y activarlo
-      document.querySelectorAll('.admin-nav-btn').forEach(btn => {
-        if (btn.innerText.toLowerCase().includes(seccion)) {
-          btn.classList.add('active');
-        }
-      });
-      
-      // Cargar datos si es necesario
-      if (seccion === 'reservas') cargarReservas();
-      if (seccion === 'empleados') cargarEmpleados();
-    }
+  <!-- FLOATING DEVIL (Admin Special) -->
+  <div id="floating-devil" class="floating-devil hidden">
+    <div class="devil-glow"></div>
+    <i class="fas fa-user-secret"></i>
+  </div>
 
-    // Funciones temporales para simular carga de datos
-    function cargarReservas() {
-      console.log('Cargando reservas...');
-      // En un caso real, aquí harías una petición AJAX para cargar las reservas
-    }
-    
-    function cargarEmpleados() {
-      console.log('Cargando empleados...');
-      // En un caso real, aquí harías una petición AJAX para cargar los empleados
-    }
-    
-    // Mostrar notificación
-    function mostrarNotificacion(mensaje, tipo = 'success') {
-      const notificacion = document.getElementById('notification');
-      const mensajeElement = notificacion.querySelector('.notification-message');
-      const iconElement = notificacion.querySelector('.notification-icon');
-      
-      // Establecer mensaje
-      mensajeElement.textContent = mensaje;
-      
-      // Establecer icono según tipo
-      if (tipo === 'success') {
-        iconElement.className = 'notification-icon fas fa-check-circle';
-        notificacion.className = 'notification success';
-      } else if (tipo === 'error') {
-        iconElement.className = 'notification-icon fas fa-exclamation-circle';
-        notificacion.className = 'notification error';
-      } else {
-        iconElement.className = 'notification-icon fas fa-info-circle';
-        notificacion.className = 'notification info';
-      }
-      
-      // Mostrar notificación
-      notificacion.classList.add('show');
-      
-      // Ocultar después de 3 segundos
-      setTimeout(() => {
-        notificacion.classList.remove('show');
-      }, 3000);
-    }
-    
-    // Event listeners para formularios de ejemplo
-    document.getElementById('form-hamburguesa').addEventListener('submit', function(e) {
-      e.preventDefault();
-      // Simulación de envío exitoso
-      document.getElementById('mensaje').innerHTML = '<i class="fas fa-check-circle"></i> Hamburguesa añadida correctamente';
-      document.getElementById('mensaje').className = 'admin-message success';
-      mostrarNotificacion('Hamburguesa añadida correctamente', 'success');
-      this.reset();
-    });
-    
-    document.getElementById('form-empleado').addEventListener('submit', function(e) {
-      e.preventDefault();
-      // Simulación de envío exitoso
-      document.getElementById('mensaje-empleado').innerHTML = '<i class="fas fa-check-circle"></i> Empleado registrado correctamente';
-      document.getElementById('mensaje-empleado').className = 'admin-message success';
-      mostrarNotificacion('Empleado registrado correctamente', 'success');
-      this.reset();
-    });
-  </script>
 </body>
 </html>

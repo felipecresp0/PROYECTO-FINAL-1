@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book FoodTruck | GULA | The 7 Capital Sins of Flavor</title>
+  <link rel="stylesheet" href="../styles/principal.css" />
+  <link rel="stylesheet" href="../styles/reservar.css" />
+  <script defer src="../scripts/main.js"></script>
+  <script defer src="../scripts/reservar.js"></script>
+  <script defer src="../scripts/reservar2.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <a href="index.html">
+        <img src="../Imagenes/logo.png" alt="Logo Gula" class="logo-img" />
+      </a>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="foodtruck.html" class="active">FoodTruck</a>
+      <a href="restaurantes.html">Restaurants</a>
+    </nav>
+    <div class="header-right">
+      <i class="fas fa-search search-icon" id="search-toggle"></i>
+      <i class="fas fa-shopping-cart cart-icon" onclick="location.href='carrito.html'"><span class="cart-count">0</span></i>
+      <button class="sign-in-btn" onclick="location.href='acceso.html'">SIGN IN</button>
+      <div class="menu-toggle">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </header>
+  
+  <!-- SEARCH OVERLAY -->
+  <div class="search-overlay">
+    <div class="search-box">
+      <input type="text" placeholder="Which sin are you looking for?" class="search-input-overlay">
+      <button class="search-btn-overlay"><i class="fas fa-search"></i></button>
+    </div>
+    <i class="fas fa-times close-search"></i>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="hero-section hero-small">
+    <div class="flame-container">
+      <div class="flame flame1"></div>
+      <div class="flame flame2"></div>
+      <div class="flame flame3"></div>
+      <div class="flame flame4"></div>
+      <div class="flame flame5"></div>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="sin-symbol">
+        <i class="fas fa-truck"></i>
+      </div>
+      <p class="hero-subtitle">BRING SINS TO YOUR EVENT</p>
+      <div class="hero-divider">
+        <span></span>
+        <i class="fas fa-utensils"></i>
+        <span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <!-- INTRO SECTION -->
+    <section class="intro-section" data-aos="fade-up">
+      <div class="section-header">
+        <div class="section-icon"><i class="fas fa-fire"></i></div>
+        <h2>HIRE OUR FOODTRUCK</h2>
+      </div>
+      <p>Bring the GULA experience to your event and surprise your guests with our sinful burgers</p>
+    </section>
+
+    <!-- BOOKING SECTION -->
+    <section class="reserva-section" data-aos="fade-up">
+      <!-- Floating Embers Background -->
+      <div class="floating-embers">
+        <div class="floating-ember floating-ember1"></div>
+        <div class="floating-ember floating-ember2"></div>
+        <div class="floating-ember floating-ember3"></div>
+        <div class="floating-ember floating-ember4"></div>
+        <div class="floating-ember floating-ember5"></div>
+        <div class="floating-ember floating-ember6"></div>
+        <div class="floating-ember floating-ember7"></div>
+      </div>
+      
+      <div class="reserva-container">
+        <div class="reserva-info">
+          <h3>BOOKING INFORMATION</h3>
+          <ul class="reserva-features">
+            <li><i class="fas fa-check-circle"></i> Corporate events</li>
+            <li><i class="fas fa-check-circle"></i> Private parties</li>
+            <li><i class="fas fa-check-circle"></i> Weddings and celebrations</li>
+            <li><i class="fas fa-check-circle"></i> Festivals and fairs</li>
+            <li><i class="fas fa-check-circle"></i> Complete staff included</li>
+            <li><i class="fas fa-check-circle"></i> Customizable menu</li>
+          </ul>
+          <div class="reserva-image">
+            <img src="../Imagenes/truck.png" alt="GULA Foodtruck">
+            <div class="image-overlay"></div>
+            <div class="image-badge pulse-element">GULA FOODTRUCK</div>
+          </div>
+          <div class="contact-info">
+            <p><i class="fas fa-phone"></i> +34 666 666 666</p>
+            <p><i class="fas fa-envelope"></i> foodtruck@gula.com</p>
+          </div>
+        </div>
+        
+        <div class="reserva-form-container">
+          <div class="form-header">
+            <span class="form-icon"><i class="fas fa-calendar-alt"></i></span>
+            <h3>BOOKING FORM</h3>
+          </div>
+          
+          <div class="form-progress">
+            <div class="progress-step active" data-step="1">
+              <div class="step-number">1</div>
+              <div class="step-label">CONTACT INFO</div>
+            </div>
+            <div class="progress-step" data-step="2">
+              <div class="step-number">2</div>
+              <div class="step-label">EVENT DETAILS</div>
+            </div>
+            <div class="progress-step" data-step="3">
+              <div class="step-number">3</div>
+              <div class="step-label">MENU & LOCATION</div>
+            </div>
+          </div>
+          
+          <form id="reserva-form" class="reserva-form">
+            <!-- STEP 1: CONTACT INFO -->
+            <div class="form-step" id="step-1">
+              <div class="form-group">
+                <label for="nombre">Full Name *</label>
+                <input type="text" id="nombre" name="nombre" required>
+                <span class="error-message" id="error-nombre"></span>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="email">Email *</label>
+                  <input type="email" id="email" name="email" required>
+                  <span class="error-message" id="error-email"></span>
+                </div>
+                
+                <div class="form-group">
+                  <label for="telefono">Phone *</label>
+                  <input type="tel" id="telefono" name="telefono" required>
+                  <span class="error-message" id="error-telefono"></span>
+                </div>
+              </div>
+              
+              <div class="form-nav">
+                <button type="button" class="step-btn next-btn">
+                  NEXT <i class="fas fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+            
+            <!-- STEP 2: EVENT DETAILS -->
+            <div class="form-step" id="step-2" style="display: none;">
+              <div class="form-group">
+                <label for="tipo-evento">Event Type *</label>
+                <select id="tipo-evento" name="tipo-evento" required>
+                  <option value="">Select an option</option>
+                  <option value="corporativo">Corporate event</option>
+                  <option value="boda">Wedding</option>
+                  <option value="cumpleanos">Birthday</option>
+                  <option value="festival">Festival or fair</option>
+                  <option value="otro">Other</option>
+                </select>
+                <span class="error-message" id="error-tipo-evento"></span>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fecha">Event Date *</label>
+                  <input type="date" id="fecha" name="fecha" required>
+                  <span class="error-message" id="error-fecha"></span>
+                </div>
+                
+                <div class="form-group">
+                  <label for="hora">Event Time *</label>
+                  <input type="time" id="hora" name="hora" required>
+                  <span class="error-message" id="error-hora"></span>
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="duracion">Duration (hours) *</label>
+                  <input type="number" id="duracion" name="duracion" min="2" max="8" required>
+                  <span class="error-message" id="error-duracion"></span>
+                </div>
+                
+                <div class="form-group">
+                  <label for="invitados">Number of guests *</label>
+                  <input type="number" id="invitados" name="invitados" min="20" required>
+                  <span class="error-message" id="error-invitados"></span>
+                </div>
+              </div>
+              
+              <div class="form-nav">
+                <button type="button" class="step-btn prev-btn">
+                  <i class="fas fa-arrow-left"></i> PREVIOUS
+                </button>
+                <button type="button" class="step-btn next-btn">
+                  NEXT <i class="fas fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+            
+            <!-- STEP 3: MENU & LOCATION -->
+            <div class="form-step" id="step-3" style="display: none;">
+              <div class="menu-selector-compact">
+                <div class="menu-selector-header">
+                  <i class="fas fa-utensils"></i>
+                  <h3>SELECT A MENU</h3>
+                </div>
+                <div class="menu-options">
+                  <div class="menu-option" data-menu="basico">
+                    <div class="menu-name">BASIC MENU</div>
+                    <div class="menu-price">€14/person</div>
+                    <div class="menu-items">
+                      <span>1 burger + fries + drink</span>
+                    </div>
+                  </div>
+                  <div class="menu-option" data-menu="tentacion">
+                    <div class="menu-badge">POPULAR</div>
+                    <div class="menu-name">TEMPTATION</div>
+                    <div class="menu-price">€19/person</div>
+                    <div class="menu-items">
+                      <span>1 burger + deluxe fries + appetizer + drink + dessert</span>
+                    </div>
+                  </div>
+                  <div class="menu-option" data-menu="pecado">
+                    <div class="menu-name">CAPITAL SIN</div>
+                    <div class="menu-price">€25/person</div>
+                    <div class="menu-items">
+                      <span>Complete experience + open bar + coffee</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="custom-menu-container">
+                  <textarea id="custom-menu" name="custom-menu" class="custom-menu-textarea" placeholder="Specifications, allergies or intolerances..."></textarea>
+                </div>
+                <input type="hidden" id="menu-seleccionado" name="menu-seleccionado" value="">
+              </div>
+              
+              <div class="form-group">
+                <label for="direccion">Event Address *</label>
+                <input type="text" id="direccion" name="direccion" required>
+                <span class="error-message" id="error-direccion"></span>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="ciudad">City *</label>
+                  <input type="text" id="ciudad" name="ciudad" required>
+                  <span class="error-message" id="error-ciudad"></span>
+                </div>
+                
+                <div class="form-group">
+                  <label for="codigo-postal">Postal Code *</label>
+                  <input type="text" id="codigo-postal" name="codigo-postal" required>
+                  <span class="error-message" id="error-codigo-postal"></span>
+                </div>
+              </div>
+              
+              <div class="form-group checkbox-group">
+                <input type="checkbox" id="terminos" name="terminos" required>
+                <label for="terminos">I accept the <a href="#" class="terms-link">terms and conditions</a> *</label>
+                <span class="error-message" id="error-terminos"></span>
+              </div>
+              
+              <div class="form-nav">
+                <button type="button" class="step-btn prev-btn">
+                  <i class="fas fa-arrow-left"></i> PREVIOUS
+                </button>
+                <button type="submit" class="submit-btn pulse-element">
+                  <span class="btn-text">SEND REQUEST</span>
+                  <i class="fas fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+          
+          <div class="form-info">
+            <p>* Required fields</p>
+            <p>We will respond to your request within 24 hours.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQS SECTION -->
+    <section class="faqs-section" data-aos="fade-up">
+      <div class="section-header">
+        <div class="section-icon"><i class="fas fa-question-circle"></i></div>
+        <h2>FREQUENTLY ASKED QUESTIONS</h2>
+      </div>
+      
+      <div class="faqs-container">
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>How far in advance should I book?</h3>
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            <p>We recommend booking at least 2 weeks in advance to guarantee availability, especially during high season (May-September). For large events or special dates like weddings, it's better to book 1-2 months in advance. The sooner you contact us, the more options you'll have to secure your ideal date!</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>What is the service price?</h3>
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            <p>The price varies according to several factors: number of guests, event duration, distance to travel, and menu options. Our packages start from €14/person for the basic menu, €19/person for the Temptation menu and €25/person for the Capital Sin experience. After receiving your request, we'll send you a personalized quote completely without obligation.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>What does the FoodTruck service include?</h3>
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            <p>Our service includes everything necessary for a complete GULA experience: the fully equipped FoodTruck, kitchen and service staff, all burgers according to the selected menu, sides, drinks, disposable materials (napkins, containers, etc.), transport and setup/breakdown. We take care of everything so you just have to enjoy the experience with your guests.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>Can the menu be customized?</h3>
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            <p>Absolutely! We can adapt our menu to your specific needs, including vegetarian options (like our "Sloth Veggie"), vegan options with Beyond Meat or gluten-free with special bread. We can also create a special themed burger for your event, as we've done with "The Newlyweds' Burger" for weddings or "The Corporate" for business events. Tell us your idea and we'll make it come true.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>What technical requirements does the FoodTruck need?</h3>
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            <p>We need a flat space of at least 8x4 meters for the FoodTruck and service area, access for a medium-sized vehicle (our FoodTruck measures 6m long x 2.2m wide x 2.8m high), and preferably a 3500W electrical outlet (although we have a silent generator if this is not possible). We also need permits to access the venue if it's a private space or has restrictions.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>What is the service area?</h3>
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            <p>Our FoodTruck operates mainly in Catalonia, based in Terrassa. We can travel up to 150km at no additional cost, covering Barcelona, Girona, Tarragona and their provinces. For longer distances or services in other communities like Madrid, Valencia or Zaragoza, consult with us for a personalized quote that includes travel expenses. We've brought our sinful burgers to all kinds of events throughout Spain!</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>Is there a minimum number of guests?</h3>
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, we generally require a minimum of 50 people for standard events. However, for special events like weddings or premium corporate events, we can make exceptions and accept groups of 25-30 people with a personalized budget. For smaller groups, we recommend our catering service where we prepare the burgers at your location without the FoodTruck.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <div class="faq-question">
+            <h3>What is the booking and payment process?</h3>
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </div>
+          <div class="faq-answer">
+            <p>The process is very simple: 1) Fill out the booking form on this page; 2) We'll send you a personalized quote within 24h; 3) If you accept it, we request a 30% deposit to confirm the date; 4) One month before the event, we'll hold a final meeting to finalize details; 5) One week before, the remaining 50% is paid, leaving 20% for the day of the event or up to 3 days later. We accept bank transfers, credit cards and Bizum for greater convenience.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS SECTION -->
+    <section class="testimonials-section" data-aos="fade-up">
+      <div class="section-header">
+        <div class="section-icon"><i class="fas fa-fire"></i></div>
+        <h2>DELICIOUS EXPERIENCES</h2>
+      </div>
+      <div class="testimonials-container">
+        <div class="testimonial-card active">
+          <div class="testimonial-rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <p>"We hired the FoodTruck for our wedding, and guests are still talking about the burgers. Impeccable service and a unique and different touch for the celebration. The personalized menu with our names was the cherry on top."</p>
+          <div class="testimonial-author">
+            <span>Laura and Miguel</span>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <p>"For our corporate event we needed something different. GULA not only offered exceptional food, but adapted perfectly to our particular needs. The booking process was simple and professional. We'll repeat!"</p>
+          <div class="testimonial-author">
+            <span>Carlos G. - Events Director</span>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+          <p>"GULA's FoodTruck was the star of our summer festival. The personalized menu, agile service and truck aesthetics fit perfectly with the event. The themed burgers they created especially for us were a hit among attendees."</p>
+          <div class="testimonial-author">
+            <span>SummerNights Festival</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </section>
+  </main>
+
+  <!-- CONFIRMATION MODAL -->
+  <div class="modal" id="confirmation-modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <div class="modal-header">
+        <i class="fas fa-check-circle"></i>
+        <h2>REQUEST SENT!</h2>
+      </div>
+      <div class="modal-body">
+        <p>We have received your FoodTruck booking request.</p>
+        <p>We will contact you shortly to confirm availability and details.</p>
+        <p class="reference-number">Reference: <span id="reference-id">GULA-FT-2025</span></p>
+      </div>
+      <button class="modal-button">ACCEPT</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-col">
+        <h4>GULA</h4>
+        <p>Burgers that awaken sins since 2022.</p>
+        <div class="social-links">
+          <a href="https://www.instagram.com/gulabvrgers/" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>EXPLORE</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="foodtruck.html">FoodTruck</a></li>
+          <li><a href="restaurantes.html">Restaurants</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>CONTACT</h4>
+        <ul>
+          <li><i class="fas fa-envelope"></i> info@gula.com</li>
+          <li><i class="fas fa-phone"></i> +34 666 666 666</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>NEWSLETTER</h4>
+        <p>Receive sinful offers</p>
+        <div class="newsletter-form">
+          <input type="email" placeholder="Your email">
+          <button type="submit"><i class="fas fa-paper-plane"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>🔥 Flavor that ignites your sins. Made with passion by <strong>GULA</strong> 🍔</p>
+      <p class="copyright">© 2025 GULA. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- FLOATING EMBERS -->
+  <div class="floating-embers">
+    <div class="floating-ember floating-ember1"></div>
+    <div class="floating-ember floating-ember2"></div>
+    <div class="floating-ember floating-ember3"></div>
+    <div class="floating-ember floating-ember4"></div>
+    <div class="floating-ember floating-ember5"></div>
+    <div class="floating-ember floating-ember6"></div>
+    <div class="floating-ember floating-ember7"></div>
+  </div>
+
+  <!-- CART DROPDOWN -->
+  <div id="carrito-desplegable">
+    <div class="carrito-header">
+      <h4>YOUR ORDER</h4>
+      <button class="carrito-close"><i class="fas fa-times"></i></button>
+    </div>
+    <ul id="lista-carrito">
+      <li class="carrito-empty">Your cart is empty</li>
+    </ul>
+    <div class="carrito-total">
+      <span class="carrito-total-label">Total:</span>
+      <span class="carrito-total-precio"><span id="carrito-total">0.00</span> €</span>
+    </div>
+    <div class="carrito-botones">
+      <a href="#" class="btn-vaciar">Empty</a>
+      <a href="checkout.html" class="btn-checkout">Checkout</a>
+    </div>
+  </div>
+</body>
+</html>

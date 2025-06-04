@@ -1,277 +1,277 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Referencias a elementos del formulario
-  const formPasos = document.querySelectorAll('.form-step');
-  const botonesNext = document.querySelectorAll('.btn-next');
-  const botonesPrev = document.querySelectorAll('.btn-prev');
+  // Form element references
+  const formSteps = document.querySelectorAll('.form-step');
+  const nextButtons = document.querySelectorAll('.btn-next');
+  const prevButtons = document.querySelectorAll('.btn-prev');
   const stepIndicators = document.querySelectorAll('.step');
-  const formulario = document.getElementById('reserva-form');
+  const form = document.getElementById('reservation-form');
   
-  // Referencias a campos del formulario
-  const campoNombre = document.getElementById('nombre');
-  const campoEmail = document.getElementById('email');
-  const campoTelefono = document.getElementById('telefono');
-  const campoPersonas = document.getElementById('personas');
-  const campoLocal = document.getElementById('local');
-  const campoFecha = document.getElementById('fecha');
-  const campoHora = document.getElementById('hora');
-  const campoComentarios = document.getElementById('comentarios');
+  // Form field references
+  const nameField = document.getElementById('name');
+  const emailField = document.getElementById('email');
+  const phoneField = document.getElementById('phone');
+  const guestsField = document.getElementById('guests');
+  const locationField = document.getElementById('location');
+  const dateField = document.getElementById('date');
+  const timeField = document.getElementById('time');
+  const commentsField = document.getElementById('comments');
   
-  // Referencias a botones de cantidad
-  const btnIncrease = document.getElementById('increase-personas');
-  const btnDecrease = document.getElementById('decrease-personas');
+  // Quantity button references
+  const btnIncrease = document.getElementById('increase-guests');
+  const btnDecrease = document.getElementById('decrease-guests');
   
-  // Referencias a elementos de resumen
-  const resumenNombre = document.getElementById('resumen-nombre');
-  const resumenEmail = document.getElementById('resumen-email');
-  const resumenTelefono = document.getElementById('resumen-telefono');
-  const resumenPersonas = document.getElementById('resumen-personas');
-  const resumenLocal = document.getElementById('resumen-local');
-  const resumenFecha = document.getElementById('resumen-fecha');
-  const resumenHora = document.getElementById('resumen-hora');
+  // Summary element references
+  const summaryName = document.getElementById('summary-name');
+  const summaryEmail = document.getElementById('summary-email');
+  const summaryPhone = document.getElementById('summary-phone');
+  const summaryGuests = document.getElementById('summary-guests');
+  const summaryLocation = document.getElementById('summary-location');
+  const summaryDate = document.getElementById('summary-date');
+  const summaryTime = document.getElementById('summary-time');
   
-  // Contenedor de horas disponibles
-  const horasContainer = document.getElementById('horas-disponibles');
+  // Available times container
+  const timesContainer = document.getElementById('available-times');
   
-  // Notificación
-  const notificacion = document.getElementById('notification');
-  const mensajeNotificacion = document.querySelector('.notification-message');
+  // Notification
+  const notification = document.getElementById('notification');
+  const notificationMessage = document.querySelector('.notification-message');
   
-  // Establecer fecha mínima (hoy)
-  const hoy = new Date();
-  const fechaMin = hoy.toISOString().split('T')[0];
-  campoFecha.min = fechaMin;
+  // Set minimum date (today)
+  const today = new Date();
+  const minDate = today.toISOString().split('T')[0];
+  dateField.min = minDate;
   
-  // ===== Funciones para navegar entre pasos =====
-  function irAlPaso(pasoActual, pasoSiguiente) {
-    // Validar el paso actual antes de continuar
-    if (pasoSiguiente > pasoActual && !validarPaso(pasoActual)) {
-      mostrarNotificacion('Por favor, completa todos los campos obligatorios', 'error');
+  // ===== Functions for navigating between steps =====
+  function goToStep(currentStep, nextStep) {
+    // Validate current step before continuing
+    if (nextStep > currentStep && !validateStep(currentStep)) {
+      showNotification('Please complete all required fields', 'error');
       return false;
     }
     
-    // Ocultar paso actual
-    formPasos[pasoActual - 1].classList.remove('active');
+    // Hide current step
+    formSteps[currentStep - 1].classList.remove('active');
     
-    // Mostrar paso siguiente
-    formPasos[pasoSiguiente - 1].classList.add('active');
+    // Show next step
+    formSteps[nextStep - 1].classList.add('active');
     
-    // Actualizar indicadores de paso
+    // Update step indicators
     stepIndicators.forEach((step, index) => {
-      if (index + 1 <= pasoSiguiente) {
+      if (index + 1 <= nextStep) {
         step.classList.add('active');
       } else {
         step.classList.remove('active');
       }
     });
     
-    // Si vamos al paso 3 (resumen), actualizar los datos
-    if (pasoSiguiente === 3) {
-      actualizarResumen();
+    // If going to step 3 (summary), update the data
+    if (nextStep === 3) {
+      updateSummary();
     }
     
     return true;
   }
   
-  // ===== Validación de pasos =====
-  function validarPaso(paso) {
-    switch (paso) {
+  // ===== Step validation =====
+  function validateStep(step) {
+    switch (step) {
       case 1:
         return (
-          campoNombre.value.trim() !== '' &&
-          campoEmail.value.trim() !== '' &&
-          campoTelefono.value.trim() !== '' &&
-          campoLocal.value !== null &&
-          campoLocal.value !== ''
+          nameField.value.trim() !== '' &&
+          emailField.value.trim() !== '' &&
+          phoneField.value.trim() !== '' &&
+          locationField.value !== null &&
+          locationField.value !== ''
         );
       case 2:
         return (
-          campoFecha.value !== '' &&
-          campoHora.value !== ''
+          dateField.value !== '' &&
+          timeField.value !== ''
         );
       default:
         return true;
     }
   }
   
-  // ===== Actualizar resumen =====
-  function actualizarResumen() {
-    resumenNombre.textContent = campoNombre.value;
-    resumenEmail.textContent = campoEmail.value;
-    resumenTelefono.textContent = campoTelefono.value;
-    resumenPersonas.textContent = campoPersonas.value;
+  // ===== Update summary =====
+  function updateSummary() {
+    summaryName.textContent = nameField.value;
+    summaryEmail.textContent = emailField.value;
+    summaryPhone.textContent = phoneField.value;
+    summaryGuests.textContent = guestsField.value;
     
-    // Obtener nombre del local a partir del value
-    const localIndex = campoLocal.selectedIndex;
-    const localText = localIndex > 0 ? campoLocal.options[localIndex].text : '';
-    resumenLocal.textContent = localText;
+    // Get location name from value
+    const locationIndex = locationField.selectedIndex;
+    const locationText = locationIndex > 0 ? locationField.options[locationIndex].text : '';
+    summaryLocation.textContent = locationText;
     
-    // Formatear fecha
-    const fecha = new Date(campoFecha.value);
-    const formatoFecha = new Intl.DateTimeFormat('es-ES', {
+    // Format date
+    const date = new Date(dateField.value);
+    const dateFormat = new Intl.DateTimeFormat('en-US', {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
       day: 'numeric'
-    }).format(fecha);
-    resumenFecha.textContent = formatoFecha.charAt(0).toUpperCase() + formatoFecha.slice(1);
+    }).format(date);
+    summaryDate.textContent = dateFormat;
     
-    resumenHora.textContent = campoHora.value;
+    summaryTime.textContent = timeField.value;
   }
   
-  // ===== Generar horas disponibles =====
-  function generarHorasDisponibles(fecha) {
-    // Limpiar horas anteriores
-    horasContainer.innerHTML = '';
+  // ===== Generate available times =====
+  function generateAvailableTimes(date) {
+    // Clear previous times
+    timesContainer.innerHTML = '';
     
-    // Si es un fin de semana (5 = viernes, 6 = sábado), mostrar horario extendido
-    const esFindeSemana = [5, 6].includes(new Date(fecha).getDay());
+    // If it's a weekend (5 = Friday, 6 = Saturday), show extended hours
+    const isWeekend = [5, 6].includes(new Date(date).getDay());
     
-    // Generar slots de hora (simulación)
-    const horaInicio = 13; // 13:00
-    const horaFin = esFindeSemana ? 23 : 22; // 23:00 o 22:00
+    // Generate time slots (simulation)
+    const startHour = 13; // 1:00 PM
+    const endHour = isWeekend ? 23 : 22; // 11:00 PM or 10:00 PM
     
-    for (let hora = horaInicio; hora <= horaFin; hora++) {
-      // Para cada hora, crear dos slots (XX:00 y XX:30)
-      for (let minutos of ['00', '30']) {
-        const horaCompleta = `${hora}:${minutos}`;
+    for (let hour = startHour; hour <= endHour; hour++) {
+      // For each hour, create two slots (XX:00 and XX:30)
+      for (let minutes of ['00', '30']) {
+        const fullTime = `${hour}:${minutes}`;
         
-        // Simular disponibilidad aleatoria
-        const disponible = Math.random() > 0.3; // 70% de disponibilidad
+        // Simulate random availability
+        const available = Math.random() > 0.3; // 70% availability
         
-        const horaElement = document.createElement('div');
-        horaElement.className = `hora-slot ${disponible ? '' : 'disabled'}`;
-        horaElement.textContent = horaCompleta;
+        const timeElement = document.createElement('div');
+        timeElement.className = `hora-slot ${available ? '' : 'disabled'}`;
+        timeElement.textContent = fullTime;
         
-        if (disponible) {
-          horaElement.addEventListener('click', () => {
-            // Deseleccionar hora anterior
+        if (available) {
+          timeElement.addEventListener('click', () => {
+            // Deselect previous time
             document.querySelectorAll('.hora-slot.selected').forEach(slot => {
               slot.classList.remove('selected');
             });
             
-            // Seleccionar esta hora
-            horaElement.classList.add('selected');
+            // Select this time
+            timeElement.classList.add('selected');
             
-            // Guardar hora en campo oculto
-            campoHora.value = horaCompleta;
+            // Save time in hidden field
+            timeField.value = fullTime;
           });
         }
         
-        horasContainer.appendChild(horaElement);
+        timesContainer.appendChild(timeElement);
       }
     }
   }
   
-  // ===== Mostrar notificación =====
-  function mostrarNotificacion(mensaje, tipo = 'success') {
-    mensajeNotificacion.textContent = mensaje;
+  // ===== Show notification =====
+  function showNotification(message, type = 'success') {
+    notificationMessage.textContent = message;
     
-    // Cambiar icono según tipo
+    // Change icon based on type
     const notificationIcon = document.querySelector('.notification-icon');
     
-    if (tipo === 'success') {
+    if (type === 'success') {
       notificationIcon.className = 'notification-icon fas fa-check-circle';
-    } else if (tipo === 'error') {
+    } else if (type === 'error') {
       notificationIcon.className = 'notification-icon fas fa-exclamation-circle';
     } else {
       notificationIcon.className = 'notification-icon fas fa-info-circle';
     }
     
-    // Mostrar notificación
-    notificacion.classList.add('show');
+    // Show notification
+    notification.classList.add('show');
     
-    // Ocultar después de 3 segundos
+    // Hide after 3 seconds
     setTimeout(() => {
-      notificacion.classList.remove('show');
+      notification.classList.remove('show');
     }, 3000);
   }
   
   // ===== Event Listeners =====
   
-  // Navegación entre pasos
-  botonesNext.forEach(btn => {
+  // Navigation between steps
+  nextButtons.forEach(btn => {
     btn.addEventListener('click', function() {
-      const pasoActual = parseInt(this.closest('.form-step').id.split('-')[1]);
-      const pasoSiguiente = parseInt(this.dataset.next.split('-')[1]);
-      irAlPaso(pasoActual, pasoSiguiente);
+      const currentStep = parseInt(this.closest('.form-step').id.split('-')[1]);
+      const nextStep = parseInt(this.dataset.next.split('-')[1]);
+      goToStep(currentStep, nextStep);
     });
   });
   
-  botonesPrev.forEach(btn => {
+  prevButtons.forEach(btn => {
     btn.addEventListener('click', function() {
-      const pasoActual = parseInt(this.closest('.form-step').id.split('-')[1]);
-      const pasoAnterior = parseInt(this.dataset.prev.split('-')[1]);
-      irAlPaso(pasoActual, pasoAnterior);
+      const currentStep = parseInt(this.closest('.form-step').id.split('-')[1]);
+      const prevStep = parseInt(this.dataset.prev.split('-')[1]);
+      goToStep(currentStep, prevStep);
     });
   });
   
-  // Control de cantidad de personas
+  // Guest count control
   btnIncrease.addEventListener('click', () => {
-    const valorActual = parseInt(campoPersonas.value);
-    if (valorActual < 10) {
-      campoPersonas.value = valorActual + 1;
+    const currentValue = parseInt(guestsField.value);
+    if (currentValue < 10) {
+      guestsField.value = currentValue + 1;
     }
   });
   
   btnDecrease.addEventListener('click', () => {
-    const valorActual = parseInt(campoPersonas.value);
-    if (valorActual > 1) {
-      campoPersonas.value = valorActual - 1;
+    const currentValue = parseInt(guestsField.value);
+    if (currentValue > 1) {
+      guestsField.value = currentValue - 1;
     }
   });
   
-  // Cuando cambia la fecha, generar horas disponibles
-  campoFecha.addEventListener('change', () => {
-    if (campoFecha.value) {
-      generarHorasDisponibles(campoFecha.value);
+  // When date changes, generate available times
+  dateField.addEventListener('change', () => {
+    if (dateField.value) {
+      generateAvailableTimes(dateField.value);
     }
   });
   
-  // Envío del formulario
-  formulario.addEventListener('submit', function(event) {
+  // Form submission
+  form.addEventListener('submit', function(event) {
     event.preventDefault();
     
-    // Validar términos
-    const terminosAceptados = document.getElementById('terminos').checked;
-    if (!terminosAceptados) {
-      mostrarNotificacion('Debes aceptar los términos y condiciones', 'error');
+    // Validate terms
+    const termsAccepted = document.getElementById('terms').checked;
+    if (!termsAccepted) {
+      showNotification('You must accept the terms and conditions', 'error');
       return;
     }
     
-    // Simular envío de formulario
-    // En un caso real, aquí enviarías los datos mediante fetch o similar
+    // Simulate form submission
+    // In a real case, you would send the data here via fetch or similar
     
-    // Mostrar notificación de éxito
-    mostrarNotificacion('¡Reserva confirmada correctamente! Recibirás un email con los detalles.');
+    // Show success notification
+    showNotification('Reservation confirmed successfully! You will receive an email with the details.');
     
-    // Reset del formulario después de 2 segundos
+    // Reset form after 2 seconds
     setTimeout(() => {
-      formulario.reset();
+      form.reset();
       
-      // Volver al primer paso
-      irAlPaso(3, 1);
+      // Return to first step
+      goToStep(3, 1);
       
-      // Limpiar selección de horas
+      // Clear time selection
       document.querySelectorAll('.hora-slot.selected').forEach(slot => {
         slot.classList.remove('selected');
       });
       
-      // Resetear número de personas a 2
-      campoPersonas.value = 2;
+      // Reset guest count to 2
+      guestsField.value = 2;
     }, 2000);
   });
   
-  // Generar horas disponibles por defecto para hoy
-  generarHorasDisponibles(fechaMin);
+  // Generate available times by default for today
+  generateAvailableTimes(minDate);
   
-  // Cambiar color de las brasas flotantes para que combinen con el tema
-  const brasas = document.querySelectorAll('.floating-ember');
-  brasas.forEach(brasa => {
-    // Colores en tema con la hamburguesería
-    const colores = ['#ff0066', '#00ffcc', '#ffcc00', '#ff3300', '#cc9900'];
-    const colorAleatorio = colores[Math.floor(Math.random() * colores.length)];
+  // Change color of floating embers to match the theme
+  const embers = document.querySelectorAll('.floating-ember');
+  embers.forEach(ember => {
+    // Colors that match the burger restaurant theme
+    const colors = ['#ff0066', '#00ffcc', '#ffcc00', '#ff3300', '#cc9900'];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
     
-    brasa.style.backgroundColor = colorAleatorio;
-    brasa.style.boxShadow = `0 0 10px ${colorAleatorio}`;
+    ember.style.backgroundColor = randomColor;
+    ember.style.boxShadow = `0 0 10px ${randomColor}`;
   });
 });

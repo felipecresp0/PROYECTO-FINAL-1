@@ -141,13 +141,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         <h2 class="modal-title">${producto.nombre}</h2>
         <p class="modal-description">${producto.descripcion}</p>
         <div class="modal-info">
-          <div class="info-group"><div class="info-label">Precio</div><div class="info-value highlight">${producto.precio.toFixed(2)}€</div></div>
-          <div class="info-group"><div class="info-label">Tipo</div><div class="info-value">${producto.vegetariano ? 'Vegetariano' : 'Normal'}</div></div>
+          <div class="info-group"><div class="info-label">Price</div><div class="info-value highlight">${producto.precio.toFixed(2)}€</div></div>
+          <div class="info-group"><div class="info-label">Tipe</div><div class="info-value">${producto.vegetariano ? 'Vegetarian' : 'Normal'}</div></div>
         </div>
-        <div class="ingredients-title">Ingredientes</div>
+        <div class="ingredients-title">Ingredients</div>
         <div class="ingredients-list">${ingredientesHTML}</div>
         <div class="rating-section">
-          <div class="rating-title">¿Qué te ha parecido este producto?</div>
+          <div class="rating-title">How do you feel about this product?</div>
           <div class="rating-stars" data-product-id="${producto.id}">${estrellas}</div>
         </div>
         <div class="modal-actions">
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             <input type="number" class="quantity-input" value="1" min="1" max="10">
             <div class="quantity-btn plus-btn">+</div>
           </div>
-          <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Añadir al carrito</button>
+          <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add to cart</button>
         </div>
       </div>`;
 
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         valorarProducto(producto.id, rating);
         ratingStars.forEach((s, i) => s.classList.toggle('active', i < rating));
         const ratingSection = modalBody.querySelector('.rating-section');
-        ratingSection.innerHTML += `<div class="already-rated">¡Gracias por tu valoración!</div>`;
+        ratingSection.innerHTML += `<div class="already-rated">Thank you for your rating!</div>`;
       });
     });
 
@@ -221,11 +221,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   function añadirAlCarrito(producto, cantidad) {
     const cartCount = document.querySelector('.cart-count');
     cartCount.textContent = parseInt(cartCount.textContent) + cantidad;
-    mostrarNotificacion(`${cantidad}x ${producto.nombre} añadido al carrito`, 'success');
+    mostrarNotificacion(`${cantidad}x ${producto.nombre} Added to cart`, 'success');
   }
 
   function valorarProducto(id, rating) {
-    console.log(`Producto ${id} valorado con ${rating} estrellas`);
+    console.log(`Producto ${id} valorado con ${rating} stars`);
   }
 
   function mostrarNotificacion(mensaje, tipo = 'info') {

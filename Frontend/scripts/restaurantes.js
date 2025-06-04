@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <h3>${restaurant.nombre}</h3>
             <p>${restaurant.direccion}</p>
             <p>Horario: ${restaurant.horario_apertura} - ${restaurant.horario_cierre}</p>
-            <button class="popup-reserve-btn" data-id="${restaurant.id}">Ver detalles</button>
+            <button class="popup-reserve-btn" data-id="${restaurant.id}">View details</button>
           </div>
         `;
         
@@ -160,21 +160,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const infoRestaurante = `
       <div class="restaurant-detail-header">
         <div class="detail-header-info">
-          <h2>${restaurant.nombre || 'Sin nombre'}</h2>
-          <p><i class="fas fa-map-marker-alt"></i> ${restaurant.direccion || 'Dirección no disponible'}</p>
-          <p><i class="fas fa-phone"></i> ${restaurant.telefono || 'Teléfono no disponible'}</p>
+          <h2>${restaurant.nombre || 'Unnamed'}</h2>
+          <p><i class="fas fa-map-marker-alt"></i> ${restaurant.direccion || 'Address not available'}</p>
+          <p><i class="fas fa-phone"></i> ${restaurant.telefono || 'Phone not available '}</p>
           <p><i class="fas fa-clock"></i> ${restaurant.horario_apertura || '00:00'} - ${restaurant.horario_cierre || '00:00'}</p>
         </div>
       </div>
       
       <div class="detail-info-grid">
         <div class="detail-info-block">
-          <h3><i class="fas fa-info-circle"></i> Sobre el local</h3>
-          <p>Restaurante con capacidad para ${restaurant.capacidad || '0'} personas.</p>
+          <h3><i class="fas fa-info-circle"></i> About the location</h3>
+          <p>Restaurant with capacity for ${restaurant.capacidad || '0'} people.</p>
         </div>
       </div>
       
-      <a href="reservas.html?restaurante=${restaurant.id}" class="detail-reserve-btn">RESERVAR MESA AHORA</a>
+      <a href="reservas.html?restaurante=${restaurant.id}" class="detail-reserve-btn">RESERVE TABLE NOW</a>
     `;
     
     if (restaurantContent) {

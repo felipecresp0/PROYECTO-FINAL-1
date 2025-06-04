@@ -6,20 +6,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const categoriasItems = document.querySelectorAll('.categoria-item');
   let acompanantes = [];
 
-  // Petición al backend
+  // Backend request
   async function fetchAcompanantes() {
     try {
       const response = await fetch("http://localhost:8080/api/productos/acompanantes");
       acompanantes = await response.json();
       cargarProductos(acompanantes);
     } catch (error) {
-      console.error("Error cargando acompañantes:", error);
+      console.error("Error loading sides:", error);
     }
   }
 
   fetchAcompanantes();
 
-  // Categorías (navegación)
+  // Categories (navigation)
   categoriasItems.forEach(item => {
     item.addEventListener('click', (e) => {
       e.preventDefault();
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Filtros
+  // Filters
   filtrosBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       filtrosBtns.forEach(b => b.classList.remove('active'));
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Cerrar modal
+  // Close modal
   closeModal.addEventListener('click', () => cerrarModal());
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrarModal(); });
   window.addEventListener('click', (e) => { if (e.target === modal) cerrarModal(); });
@@ -65,8 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (productosArray.length === 0) {
       productosGrid.innerHTML = `<div class="no-productos">
         <i class="fas fa-search"></i>
-        <h3>No hay productos disponibles</h3>
-        <p>Prueba a cambiar los filtros o selecciona otra categoría</p>
+        <h3>No products available</h3>
+        <p>Try changing the filters or select another category</p>
       </div>`;
       return;
     }
@@ -118,11 +118,11 @@ document.addEventListener('DOMContentLoaded', () => {
         <p class="modal-description">${producto.descripcion}</p>
 
         <div class="modal-info">
-          <div class="info-group"><div class="info-label">Precio</div><div class="info-value highlight">${producto.precio.toFixed(2)}€</div></div>
-          <div class="info-group"><div class="info-label">Tipo</div><div class="info-value">${producto.vegetariano ? 'Vegano' : 'Normal'}</div></div>
+          <div class="info-group"><div class="info-label">Price</div><div class="info-value highlight">${producto.precio.toFixed(2)}€</div></div>
+          <div class="info-group"><div class="info-label">Type</div><div class="info-value">${producto.vegetariano ? 'Vegan' : 'Regular'}</div></div>
         </div>
 
-        <div class="ingredients-title">Ingredientes</div>
+        <div class="ingredients-title">Ingredients</div>
         <div class="ingredients-list">
           ${(producto.ingredientes || []).map(ing => `<div class="ingredient-tag"><i class="fas fa-check"></i><span>${ing}</span></div>`).join('')}
         </div>
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <input type="number" class="quantity-input" value="1" min="1" max="10">
             <div class="quantity-btn plus-btn">+</div>
           </div>
-          <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Añadir al carrito</button>
+          <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add to cart</button>
         </div>
       </div>
     `;
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cartCount.textContent = parseInt(cartCount.textContent || "0") + cantidad;
     cartCount.style.display = 'flex';
 
-    mostrarNotificacion(`${cantidad}x ${producto.nombre} añadido al carrito`, 'success');
+    mostrarNotificacion(`${cantidad}x ${producto.nombre} added to cart`, 'success');
 
     const cartIcon = document.querySelector('.cart-icon');
     const rect = cartIcon.getBoundingClientRect();

@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
       postres = await response.json();
       cargarProductos(postres);
     } catch (error) {
-      console.error("Error cargando postres:", error);
+      console.error("Error loading desserts:", error);
     }
   }
 
@@ -59,8 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
       productosGrid.innerHTML = `
         <div class="no-productos">
           <i class="fas fa-search"></i>
-          <h3>No hay productos disponibles</h3>
-          <p>Prueba a cambiar los filtros o selecciona otra categoría</p>
+          <h3>No products available</h3>
+          <p>Try changing the filters or select another category</p>
         </div>`;
       return;
     }
@@ -113,15 +113,15 @@ document.addEventListener('DOMContentLoaded', () => {
         <h2 class="modal-title">${p.nombre}</h2>
         <p class="modal-description">${p.descripcion}</p>
         <div class="modal-info">
-          <div class="info-group"><div class="info-label">Precio</div><div class="info-value highlight">${p.precio.toFixed(2)}€</div></div>
+          <div class="info-group"><div class="info-label">Price</div><div class="info-value highlight">${p.precio.toFixed(2)}€</div></div>
         </div>
-        <div class="ingredients-title">Ingredientes</div>
+        <div class="ingredients-title">Ingredients</div>
         <div class="ingredients-list">
           ${(p.ingredientes || []).map(ing => `
             <div class="ingredient-tag"><i class="fas fa-check"></i><span>${ing}</span></div>`).join('')}
         </div>
         <div class="rating-section">
-          <div class="rating-title">¿Qué te ha parecido este producto?</div>
+          <div class="rating-title">How did you like this product?</div>
           <div class="rating-stars" data-product-id="${p.id}">${estrellas}</div>
         </div>
         <div class="modal-actions">
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <input type="number" class="quantity-input" value="1" min="1" max="10">
             <div class="quantity-btn plus-btn">+</div>
           </div>
-          <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Añadir al carrito</button>
+          <button class="add-to-cart-btn"><i class="fas fa-shopping-cart"></i> Add to cart</button>
         </div>
       </div>`;
 
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let count = parseInt(cartCount.textContent) || 0;
     cartCount.textContent = count + cantidad;
     cartCount.style.display = 'flex';
-    mostrarNotificacion(`${cantidad}x ${producto.nombre} añadido al carrito`, 'success');
+    mostrarNotificacion(`${cantidad}x ${producto.nombre} added to cart`, 'success');
   }
 
   function mostrarNotificacion(mensaje, tipo = 'info') {
